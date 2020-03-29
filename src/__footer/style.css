@@ -1,0 +1,168 @@
+/*footer*/
+.footer {
+	width: 100%;
+}
+.footer__main-conteiner {
+	height: 80px;
+	padding: 0 105px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.footer__copyright {
+	font-family: Roboto;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 16px;
+	line-height: 22px;
+	color: #B6BCBF;
+}
+.footer__link-conteiner {
+	display: flex;
+	flex-flow: row;
+}
+.footer__link {
+	font-family: Roboto;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 18px;
+	line-height: 24px;
+	text-align: center;
+	color: #1A1B22;
+	text-decoration: none;
+	height: 22px;
+}
+.link__main {
+	width: 110px;
+}
+.link__yp {
+	width: 192px;
+}
+.footer__icon {
+	width: 22px;
+	height: 22px;
+}
+.link__git {
+	margin-left: 42px;
+	margin-right: 28px;
+}
+.footer__icon img {
+	width: 100%;
+}
+@media screen and (max-width: 1250px) {
+	.footer__main-conteiner {
+		padding: 0 40px;
+	}
+}
+@media screen and (max-width: 1024px) {
+	.footer__main-conteiner {
+		height: 64px;
+	}
+	.footer__link {
+		font-size: 16px;
+		line-height: 22px;
+	}
+	.link__main {
+	width: 88px;
+	}
+	.link__yp {
+		width: 176px;
+	}
+	.footer__icon {
+		width: 20px;
+		height: 20px;
+	}
+	.link__git {
+		margin-left: 26px;
+		margin-right: 28px;
+	}
+}
+@media screen and (max-width: 680px) {
+	.footer__main-conteiner {
+		padding: 0 16px;
+		margin: 0 auto;
+		width: 350px;
+		height: 150px;
+		flex-flow: column-reverse;
+	}
+	.footer__copyright {
+		margin-top: 32px;
+		padding-bottom: 25px;
+	}
+	.footer__link-conteiner {
+		margin-top: 20px;
+		width: 350px;
+		height: 74px;
+		position: relative;
+	}
+	.footer__link {
+		position: absolute;
+		font-size: 18px;
+		line-height: 20px;
+		width: auto;
+	}
+	.link__main {
+		top: 0;
+		left: 0;
+	}
+	.link__yp {
+		left: 0;
+		bottom: 0;
+	}
+	.footer__icon {
+		top: 0;
+		right: 0;
+		position: absolute;
+		width: 20px;
+		height: 20px;
+	}
+	.link__git {
+		margin-left: 26px;
+		right: 27px;
+	}
+}
+@media screen and (max-width: 420px) {
+	.footer__main-conteiner {
+		padding: 0 16px;
+		margin: 0 auto;
+		width: 288px;
+		height: 150px;
+		flex-flow: column-reverse;
+	}
+	.footer__copyright {
+		margin-top: 32px;
+		padding-bottom: 25px;
+	}
+	.footer__link-conteiner {
+		margin-top: 20px;
+		width: 288px;
+		height: 74px;
+		position: relative;
+	}
+	.footer__link {
+		position: absolute;
+		font-size: 18px;
+		line-height: 20px;
+		width: auto;
+	}
+	.link__main {
+		top: 0;
+		left: 0;
+	}
+	.link__yp {
+		left: 0;
+		bottom: 0;
+	}
+	.footer__icon {
+		top: 0;
+		right: 0;
+		position: absolute;
+		width: 20px;
+		height: 20px;
+	}
+	.link__git {
+		margin-left: 26px;
+		right: 27px;
+	}
+}
+

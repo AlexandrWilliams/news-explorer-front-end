@@ -1,0 +1,83 @@
+@import "../__newscard/newscard-block.css";
+@import "../__newscard/__newscard.css";
+
+.newscard__conteiner {
+	margin: auto;
+	width: calc(100% - 208px);
+}
+.newscard__keyword {
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+    top: 24px;
+	left: 24px;
+    width: auto;
+    padding: 0 15px;
+    height: 40px;
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: #fff;
+    font-family: Roboto;
+	font-style: normal;
+	font-weight: 700;
+	font-size: 14px;
+	line-height: 24px;
+	color: #000000;
+} 
+.newscard__delete {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    border-radius: 8px;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('../img/trash.png');
+}
+.newscard__delete:hover {
+	background-image: url('../img/trash-active.png');
+}
+.newscard__delete span {
+	position: absolute;
+	display: none;
+	align-items: center;
+	justify-content: space-around;
+    right: 45px;
+    width: 160px;
+    height: 40px;
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: #fff;
+    font-family: Roboto;
+	font-style: normal;
+	font-weight: 600;
+	font-size: 12px;
+	line-height: 14px;
+	color: #000000;
+}
+.newscard__delete:hover span {
+	display: flex;
+}
+
+@media screen and (max-width: 1024px) {
+	.newscard__conteiner {
+		margin: auto;
+		width: calc(100% - 80px);
+		padding: 32px 40px;
+	}
+}
+@media screen and (max-width: 680px) {
+	.newscard__conteiner {
+		width: 350px;
+	}
+}
+@media screen and (max-width: 420px) {
+	.newscard__conteiner {
+		width: 288px;
+		padding: 32px 16px;
+	}
+}

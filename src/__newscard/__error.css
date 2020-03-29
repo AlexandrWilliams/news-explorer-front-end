@@ -1,0 +1,38 @@
+/*newscard error*/
+.newscard-error {
+	display: flex;
+	width: 100%;
+	flex-flow: column;
+	align-items: center;
+	position: relative;
+	background-color: #F5F6F7;
+}
+.newscard-error__deactiveted {
+	display: none;
+}
+.newscard-error__img {
+	margin-top: 86px;
+	width: 96px;
+	height: 96px;
+}
+.newscard-error__title {
+	margin-top: 24px;
+	font-family: Roboto-Slab;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 26px;
+	line-height: 30px;
+	color: #1A1B22;
+}
+.newscard-error__descripition {
+	margin-top: 16px;
+	padding-bottom: 80px;
+	width: 320px;
+	font-family: Roboto;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 18px;
+	line-height: 24px;
+	text-align: center;
+	color: #B6BCBF;
+}

@@ -1,0 +1,33 @@
+/*header*/
+@import "../__header/style.css";
+/*search*/
+@import "../__search-block/style.css";
+/*newscard-block*/
+@import "../__newscard/style.css";
+/*about*/
+@import "../__about/style.css";
+/*footer*/
+@import "../__footer/style.css";
+
+@font-face {
+  font-family: Roboto-Medium;
+  src: url(../fonts/roboto-medium-webfont.woff);
+}
+@font-face {
+  font-family: Roboto;
+  src: url(../fonts/roboto-regular-webfont.woff);
+}
+@font-face {
+  font-family: Roboto-Slab;
+  src: url(../fonts/robotoslab-regular-webfont.woff);
+}
+
+body {
+	max-width: 1440px;
+	width: 100%;
+	margin: 0 auto;
+}
+h1, h2, h3, h4, p, input {
+	margin: 0;
+	padding: 0;
+}

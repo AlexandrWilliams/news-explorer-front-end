@@ -1,0 +1,54 @@
+/*header main file*/
+@import "../__header/header.css";
+@import "../__header/__logo.css";
+@import "../__header/__buttons.css";
+@import "../__header/__popUp.css";
+
+.header {
+	box-shadow: inset 0px -1px 0px #00000033;
+}
+.header__logo,.header__button {
+	color: #000;
+}
+.header__button_active {
+	background-color: #000;
+}
+.header__button_auth_active {
+	display: flex; 
+	align-items: center;
+	width: auto;
+	padding: 0 20px;
+	border-color: #000;
+}
+.header__mobile-icon_black {
+	    background-image: url("../img/menu_black.png");
+}
+.header__button_exit-icon_black {
+	background-image: url('../img/logout.png');
+}
+.header__logo-white-scheme {
+	color: #fff;
+}
+.header__button-white-scheme {
+	color: #fff;
+	border-color: white;
+}
+@media screen and (min-width: 691px) {
+	.header__conteiner {
+		display: flex;
+		align-items: center;
+	}
+}
+@media screen and (max-width: 1024px) {
+	.header__button_active {
+	    bottom: -22px;
+	}
+}
+@media screen and (max-width: 690px) {
+	.header__mobile-icon {
+	    display: block;
+	}
+	.popUp__background {
+		display: block;
+	}
+}
