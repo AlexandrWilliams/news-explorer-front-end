@@ -7,77 +7,15 @@
   	<meta name="author" content="Alexander Williams">
   	<meta name="viewport" content="width=device-width, initial-scale=1.0">
   	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>NewsExplorer</title>
+	<title>SavedNews</title>
 	<link rel="shortcut icon" type="image/png" href="./img/favicon.png"/>
-	<link rel="stylesheet" type="text/css" href="../savedNews.d7c798b5352d434337a2.css">
-	<style type="text/css">
-		.newscard__conteiner {
-			width: calc(100% - 208px);
-		}
-		.newscard__keyword {
-			position: absolute;
-			display: flex;
-			align-items: center;
-			justify-content: space-around;
-		    top: 24px;
-			left: 24px;
-		    width: auto;
-		    padding: 0 15px;
-		    height: 40px;
-		    cursor: pointer;
-		    border-radius: 10px;
-		    background-color: #fff;
-		    font-family: Roboto;
-			font-style: normal;
-			font-weight: 700;
-			font-size: 14px;
-			line-height: 24px;
-			color: #000000;
-		} 
-		.newscard__delete {
-		    position: absolute;
-		    top: 24px;
-		    right: 24px;
-		    width: 40px;
-		    height: 40px;
-		    cursor: pointer;
-		    border-radius: 8px;
-		    background-color: #fff;
-		    background-repeat: no-repeat;
-		    background-position: center;
-		    background-image: url('./img/trash.png');
-		}
-		.newscard__delete:hover {
-			background-image: url('./img/trash-active.png');
-		}
-		.newscard__delete span {
-			position: absolute;
-			display: none;
-			align-items: center;
-			justify-content: space-around;
-		    right: 45px;
-		    width: 160px;
-		    height: 40px;
-		    cursor: pointer;
-		    border-radius: 10px;
-		    background-color: #fff;
-		    font-family: Roboto;
-			font-style: normal;
-			font-weight: 600;
-			font-size: 12px;
-			line-height: 14px;
-			color: #000000;
-		}
-		.newscard__delete:hover span {
-			display: flex;
-		}
-	</style>
-<link href="../savedNews.d7c798b5352d434337a2.css" rel="stylesheet"></head>
+	<!--<link rel="stylesheet" type="text/css" href="../savedNews.3a36b922ac74623ba3b5.css">-->
+<link href="../savedNews.3a36b922ac74623ba3b5.css" rel="stylesheet"></head>
 <body>
 	<header class="header">
 		<div class="header__main-conteiner">
 			<a class="header__logo" href="mainpage">NewsExplorer</a>
-			<div class="header__mobile-icon"></div>
+			<div class="header__mobile-icon header__mobile-icon_black"></div>
 			<div class="header__conteiner">
 				<a class="header__button header__button_main" href="#">
 					Главная
@@ -88,7 +26,7 @@
 				</a>
 				<button class="header__button header__button_auth header__button_auth_active">
 					Alexander
-					<img class="header__button_exit-icon" src="./img/logout.png" alt="logout icon">
+					<span class="header__button_exit-icon header__button_exit-icon_black"></span>
 				</button>
 			</div>
 		</div>
@@ -189,16 +127,16 @@
 			</div>
 		</div>
 	</footer>
-	<script type="text/javascript" src="../savedNews.20ac78231ceca935bccc.js"></script>
+	<!--<script type="text/javascript" src="../savedNews.38b01cec8e3af50db9bd.js"></script>-->
 	<script type="text/javascript">
 		const newscardTxtMainCont = document.querySelectorAll('.newscard__txt-conteiner');
 		const windowWidth = window.innerWidth;
-		if (windowWidth < 1250 && windowWidth >= 690) {
+		if (windowWidth < 1250 && windowWidth >= 680) {
 			setTimeout(go, 50)
 			function go(){
 				newscardTxtMainCont.forEach(e=>{setEclipsis(220, e)});
 			}
-		} else if (windowWidth < 690) {
+		} else if (windowWidth < 680) {
 			setTimeout(go, 50)
 			function go(){
 				newscardTxtMainCont.forEach(e=>{setEclipsis(185, e)});
@@ -217,5 +155,5 @@
 			}
 		}	
 	</script>
-<script type="text/javascript" src="../savedNews.20ac78231ceca935bccc.js"></script></body>
+<script type="text/javascript" src="../savedNews.38b01cec8e3af50db9bd.js"></script></body>
 </html>
