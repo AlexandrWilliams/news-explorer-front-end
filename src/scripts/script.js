@@ -11,10 +11,10 @@ const popUpSignInHtml = `
 				<h3 class="popUp__title" >Вход</h3>
 				<form class="popUp__login-form" name="logIn" action="post" method="POST">
 					<label class="popUp__label popUp__label_email" for="email">Email</label>
-					<input class="popUp__input" type="email" name="email" minlength="6" maxlength="30" placeholder="Введите почту">
+					<input class="popUp__input" type="email" name="email" minlength="6" maxlength="30" placeholder="Введите почту" required>
 					<span class="popUp__input-line"></span>
 					<label class="popUp__label popUp__label_password" for="password">Пароль</label>
-					<input class="popUp__input" type="password" name="password" minlength="6" maxlength="16" placeholder="Введите пароль">
+					<input class="popUp__input" type="password" name="password" minlength="6" maxlength="16" placeholder="Введите пароль" required>
 					<span class="popUp__input-line"></span>
 					<input class="popUp__submit" type="submit" name="submit" value="Войти">
 					<h4 class="popUp__under-button-txt">или <span class="popUp__signup">Зарегистрироваться</span></h4>
@@ -26,10 +26,10 @@ const popUpSignUpHtml = `
 				<h3 class="popUp__title" >Регистрация</h3>
 				<form class="popUp__login-form" name="logIn" action="post" method="POST">
 					<label class="popUp__label popUp__label_email" for="email">Email</label>
-					<input class="popUp__input" type="email" name="email" minlength="6" maxlength="30" placeholder="Введите почту">
+					<input class="popUp__input" type="email" name="email" minlength="6" maxlength="30" placeholder="Введите почту" required>
 					<span class="popUp__input-line"></span>
 					<label class="popUp__label popUp__label_password" for="password">Пароль</label>
-					<input class="popUp__input" type="password" name="password" minlength="6" maxlength="16" placeholder="Введите пароль">
+					<input class="popUp__input" type="password" name="password" minlength="6" maxlength="16" placeholder="Введите пароль" required>
 					<span class="popUp__input-line"></span>
 					<label class="popUp__label popUp__label_name" for="name">Имя</label>
 					<input class="popUp__input" type="text" name="name" minlength="6" maxlength="16" placeholder="Введите свое имя">

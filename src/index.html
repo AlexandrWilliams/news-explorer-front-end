@@ -14,20 +14,20 @@
 <body>
 	<header class="header">
 		<div class="header__main-conteiner">
-			<a class="header__logo" href="mainpage">NewsExplorer</a>
+			<a class="header__logo" title="NewsExplorer" href="https://alexandrwilliams.github.io/news-explorer-front-end/">NewsExplorer</a>
 			<div class="header__mobile-icon"></div>
 			<div class="header__conteiner">
-				<a class="header__button header__button_main" href="#">
+				<a class="header__button header__button_main" title="NewsExplorer" href="https://alexandrwilliams.github.io/news-explorer-front-end/">
 					Главная
 					<span class="header__button_active"></span>
 				</a>
-				<a class="header__button header__button_save" href="#">Сохранённые статьи</a>
+				<a class="header__button header__button_save" title="SavedNews" href="https://alexandrwilliams.github.io/news-explorer-front-end/saved_news/">Сохранённые статьи</a>
 				<button class="header__button header__button_auth">Авторизоваться</button>
 			</div>
 		</div>
 		<span class="header__span"></span>
 	</header>
-	<main class="page__conteiner">
+	<main class="main__conteiner">
 		<section class="search-block">
 			<div class="search-block__conteiner">
 				<h1 class="search-block__title">Что в мире творится?</h1>
@@ -47,7 +47,7 @@
 			<h4 class="preloader__description">Идёт поиск новостей</h4>
 		</section>
 		<section class="newscard-error">
-			<img class="newscard-error__img" src="<%=require('./img/error.png')%>">
+			<img class="newscard-error__img" src="<%=require('./img/error.png')%>" alt="error">
 			<h3 class="newscard-error__title" >Ничего не найдено</h3>
 			<h4 class="newscard-error__descripition" >К сожалению по вашему запросу ничего не найдено.</h4>
 		</section> -->
@@ -56,7 +56,7 @@
 				<h2 class="newscard-block__title">Результаты поиска</h2>
 				<div class="newscard__conteiner">
 					<div class="newscard">
-						<img class="newscard__img" src="<%=require('./img/img_01.png')%>">
+						<img class="newscard__img" src="<%=require('./img/img_01.png')%>" alt="news photo">
 						<span class="newscard__save"></span>
 						<div class="newscard__txt-conteiner">
 							<h4 class="newscard__date">2 августа, 2019</h4>
@@ -67,7 +67,7 @@
 						
 					</div>
 					<div class="newscard">
-						<img class="newscard__img" src="<%=require('./img/img_02.png')%>">
+						<img class="newscard__img" src="<%=require('./img/img_02.png')%>" alt="news photo">
 						<span class="newscard__save"></span>
 						<div class="newscard__txt-conteiner">
 							<h4 class="newscard__date">2 августа, 2019</h4>
@@ -79,7 +79,7 @@
 						
 					</div>
 					<div class="newscard">
-						<img class="newscard__img" src="<%=require('./img/img_03.png')%>">
+						<img class="newscard__img" src="<%=require('./img/img_03.png')%>" alt="news photo">
 						<span class="newscard__save newscard__save_active"></span>
 						<div class="newscard__txt-conteiner">
 							<h4 class="newscard__date">2 августа, 2019</h4>
@@ -94,7 +94,7 @@
 			</div>
 		</section>
 		<section class="about-author">
-			<img class="about-author__img" src="https://scontent-mia3-2.xx.fbcdn.net/v/t1.15752-9/83977935_1355129287999339_3594856556958580736_n.jpg?_nc_cat=107&_nc_ohc=2ar6o3IcGkcAX9ejxkw&_nc_ht=scontent-mia3-2.xx&oh=92ab7cf7ae976f55e44cf1a0a650e22d&oe=5ECC5CF7">
+			<img class="about-author__img" src="https://scontent-mia3-2.xx.fbcdn.net/v/t1.15752-9/83977935_1355129287999339_3594856556958580736_n.jpg?_nc_cat=107&_nc_ohc=2ar6o3IcGkcAX9ejxkw&_nc_ht=scontent-mia3-2.xx&oh=92ab7cf7ae976f55e44cf1a0a650e22d&oe=5ECC5CF7" alt="author photo">
 			<div class="about-author__txt-conteiner">
 				<h2 class="about-author__title">Об авторе</h2>
 				<p class="about-author__txt">Это блок с описанием автора проекта. Здесь следует указать, как вас зовут, чем вы занимаетесь, какими технологиями разработки владеете.<br><br>Также можно рассказать о процессе обучения в Практикуме, чему вы тут научились, и чем можете помочь потенциальным заказчикам.</p>
@@ -107,27 +107,33 @@
 		<div class="footer__main-conteiner">
 			<h4 class="footer__copyright">© 2020 Supersite, Powered by News API</h4>
 			<div class="footer__link-conteiner">
-				<a class="footer__link link__main" href="">Главная</a>
-				<a class="footer__link link__yp" href="https://praktikum.yandex.ru">Яндекс.Практикум</a>
-				<a class="footer__icon link__git" href="GIt">
-					<img class="git__img" src="<%=require('./img/git.png')%>">
+				<a class="footer__link link__main" title="NewsExplorer" href="https://alexandrwilliams.github.io/news-explorer-front-end/">Главная</a>
+				<a class="footer__link link__yp" title="YandexPraktikum" href="https://praktikum.yandex.ru">Яндекс.Практикум</a>
+				<a class="footer__icon link__git" title="GIT" href="https://github.com/">
+					<img class="git__img" src="<%=require('./img/git.png')%>" alt="git logo">
 				</a>
-				<a class="footer__icon link__facebook" href="Facebook">
-					<img class="facebook__img" src="<%=require('./img/facebook.png')%>">
+				<a class="footer__icon link__facebook" title="Facebook" href="https://www.facebook.com/">
+					<img class="facebook__img" src="<%=require('./img/facebook.png')%>" alt="facebook logo">
 				</a>
 			</div>
 		</div>
 	</footer>
 	<script type="text/javascript" src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"></script>
 	<script type="text/javascript">
+
 		const newscardTxtMainCont = document.querySelectorAll('.newscard__txt-conteiner');
 		const windowWidth = window.innerWidth;
-		if (windowWidth < 1250 && windowWidth >= 690) {
+		if (windowWidth < 1350 && windowWidth >= 1250) {
+			setTimeout(go, 50)
+			function go(){
+				newscardTxtMainCont.forEach(e=>{setEclipsis(230, e)});
+			}
+		} else if (windowWidth < 1250 && windowWidth > 680) {
 			setTimeout(go, 50)
 			function go(){
 				newscardTxtMainCont.forEach(e=>{setEclipsis(220, e)});
 			}
-		} else if (windowWidth < 690) {
+		} else if (windowWidth <= 680) {
 			setTimeout(go, 50)
 			function go(){
 				newscardTxtMainCont.forEach(e=>{setEclipsis(185, e)});
@@ -144,7 +150,14 @@
 				newscardTxt.textContent = str + '...';
 				heightOfElem = elem.offsetHeight;
 			}
-		}	
+		}
+		//scritp auto refresh for eclipses
+		window.addEventListener("resize", ()=>{
+			setTimeout(resetScreen, 500);
+			function resetScreen(){
+				location.reload()
+			}
+		});
 	</script>
 </body>
 </html>
