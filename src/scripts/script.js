@@ -1,13 +1,19 @@
-
 const logInButton = document.querySelector('.header__button_auth');
-const pageConteiner = document.querySelector('.page__conteiner');
+const pageConteiner = document.querySelector('.main__conteiner');
+
+const logo = document.querySelector('.header__logo');
+const buttons = document.querySelectorAll('.header__button');
+const exitImg = document.querySelector('.header__button_exit-icon');
+const title = document.querySelector('title');
+const jumpToFile = (title.textContent === 'SavedNews')?'../img/close.png':'img/close.png';
+
 const popUpSectionHtml = `
 		<section class="popUp">
 			<div class="popUp__background"></div>
 		</section>`;
 const popUpSignInHtml = `
 			<div class="popUp__conteiner">
-				<img class="popUp__close-icon" src="img/close.png" alt="close icon">
+				<img class="popUp__close-icon" src="${jumpToFile}" alt="close icon">
 				<h3 class="popUp__title" >Вход</h3>
 				<form class="popUp__login-form" name="logIn" action="post" method="POST">
 					<label class="popUp__label popUp__label_email" for="email">Email</label>
@@ -22,7 +28,7 @@ const popUpSignInHtml = `
 			</div>`;
 const popUpSignUpHtml = `
 			<div class="popUp__conteiner">
-				<img class="popUp__close-icon" src="img/close.png" alt="close icon">
+				<img class="popUp__close-icon" src="${jumpToFile}" alt="close icon">
 				<h3 class="popUp__title" >Регистрация</h3>
 				<form class="popUp__login-form" name="logIn" action="post" method="POST">
 					<label class="popUp__label popUp__label_email" for="email">Email</label>
@@ -40,7 +46,7 @@ const popUpSignUpHtml = `
 			</div>`;
 const popUpSignUpSuccessefull = `
 			<div class="popUp__conteiner_successefull">
-				<img class="popUp__close-icon" src="img/close.png" alt="close icon">
+				<img class="popUp__close-icon" src="${jumpToFile}" alt="close icon">
 				<h3 class="popUp__title" >Пользователь успешно зарегистрирован!</h3>
 				<h4 class="popUp__successefull-description" >Выполнить вход</h4>
 			</div>`
@@ -125,11 +131,6 @@ if (window.innerWidth < 680) {
 		}
 	})
 }
-
-const logo = document.querySelector('.header__logo');
-const buttons = document.querySelectorAll('.header__button');
-const exitImg = document.querySelector('.header__button_exit-icon');
-const title = document.querySelector('title');
 
 function whiteScheme() {
 	if (title.textContent === 'SavedNews') {
