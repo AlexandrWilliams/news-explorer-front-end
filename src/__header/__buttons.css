@@ -39,7 +39,7 @@ li {
 	color: #B6BCBF;
 }
 .header__button_auth {
-	/*width: 175px;*/
+	display: flex;
 	padding: 0 20px;
 	height: 48px;
 	cursor: pointer;

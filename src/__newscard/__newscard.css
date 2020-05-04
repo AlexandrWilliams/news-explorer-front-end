@@ -51,6 +51,10 @@
 	line-height: 30px;
 	color: #1A1B22;
 }
+.newscard__title a {
+	text-decoration: none;
+	color: #1a1b22;
+}
 .newscard__txt {
 	margin-top: 16px;
 	font-family: Roboto;

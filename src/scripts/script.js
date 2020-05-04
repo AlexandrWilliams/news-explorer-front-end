@@ -1,109 +1,170 @@
-const logInButton = document.querySelector('.header__button_auth');
-const pageConteiner = document.querySelector('.main__conteiner');
+let login = false;
 
-const logo = document.querySelector('.header__logo');
-const buttons = document.querySelectorAll('.header__button');
-const exitImg = document.querySelector('.header__button_exit-icon');
+const name = setName();
+
+function setHeaders(name){
+	const headertoRemove = document.querySelector('.header__conteiner');
+	(!headertoRemove)?false:headertoRemove.remove();
+	const header = document.querySelector('.header__main-conteiner');
+	const headerAintAuth = `<ul class="header__conteiner">
+							<li>
+								<a class="header__button header__button_main" title="NewsExplorer" href="https://alexandrwilliams.github.io/news-explorer-front-end/">
+								Главная
+								<span class="header__button_active"></span>
+								</a>
+							</li>
+							<li>
+								<button class="header__button header__button_auth">Авторизоваться</button>
+							</li>
+						</ul>`;
+	const headerAuth = `<ul class="header__conteiner">
+						<li>
+							<a class="header__button header__button_main" title="NewsExplorer" href="https://alexandrwilliams.github.io/news-explorer-front-end/">
+							Главная
+							<span class="header__button_active"></span>
+							</a>
+						</li>
+						<li>
+							<a class="header__button header__button_save" title="SavedNews" href="https://alexandrwilliams.github.io/news-explorer-front-end/saved_news/">Сохранённые статьи</a>
+						</li>
+						<li>
+							<button class="header__button header__button_auth">${name}
+								<span class="header__button_exit-icon header__button_exit-icon_black"></span>
+							</button>
+						</li>
+					</ul>`;
+	if (login) {
+		header.insertAdjacentHTML('beforeend', headerAuth);
+	} else {
+		header.insertAdjacentHTML('beforeend', headerAintAuth);
+	}
+	headersListener();
+	return;
+};
+
 const title = document.querySelector('title');
-const jumpToFile = (title.textContent === 'SavedNews')?'../img/close.png':'img/close.png';
+	const jumpToFile = (title.textContent === 'SavedNews')?'../img/close.png':'img/close.png';
 
-const popUpSectionHtml = `
-		<section class="popUp">
-			<div class="popUp__background"></div>
-		</section>`;
-const popUpSignInHtml = `
-			<div class="popUp__conteiner">
-				<img class="popUp__close-icon" src="${jumpToFile}" alt="close icon">
-				<h3 class="popUp__title" >Вход</h3>
-				<form novalidate class="popUp__login-form" name="signIn" action="https://api.alexanderwilliams.us/signin" method="POST">
-					<label class="popUp__label popUp__label_email" for="email">Email</label>
-					<input class="popUp__input" type="email" name="email" minlength="6" maxlength="30" placeholder="Введите почту" required>
-					<span id="error-email" class="error-sms error-sms__name"></span>
-					<span class="popUp__input-line"></span>
-					<label class="popUp__label popUp__label_password" for="password">Пароль</label>
-					<input class="popUp__input" type="password" name="password" minlength="8" maxlength="16" placeholder="Введите пароль" required>
-					<span class="popUp__input-line"></span>
-					<span id="error-password" class="error-sms error-sms__name"></span>
-					<input class="popUp__submit" type="submit" name="submit" value="Войти">
-					<h4 class="popUp__under-button-txt">или <span class="popUp__signup">Зарегистрироваться</span></h4>
-				</form>
-			</div>`;
-const popUpSignUpHtml = `
-			<div class="popUp__conteiner">
-				<img class="popUp__close-icon" src="${jumpToFile}" alt="close icon">
-				<h3 class="popUp__title" >Регистрация</h3>
-				<form novalidate class="popUp__login-form" name="signUp" action="https://api.alexanderwilliams.us/signup" method="POST">
-					<label class="popUp__label popUp__label_email" for="email">Email</label>
-					<input class="popUp__input" type="email" name="email" minlength="6" maxlength="30" placeholder="Введите почту" required>
-					<span class="popUp__input-line"></span>
-					<span id="error-email" class="error-sms error-sms__name"></span>
-					<label class="popUp__label popUp__label_password" for="password">Пароль</label>
-					<input class="popUp__input" type="password" name="password" minlength="8" maxlength="16" placeholder="Введите пароль" required>
-					<span class="popUp__input-line"></span>
-					<span id="error-password" class="error-sms error-sms__name"></span>
-					<label class="popUp__label popUp__label_name" for="name">Имя</label>
-					<input class="popUp__input" type="text" name="name" minlength="4" maxlength="16" placeholder="Введите свое имя">
-					<span class="popUp__input-line"></span>
-					<span id="error-name" class="error-sms error-sms__name"></span>
-					<input class="popUp__submit popUp__submit_signUp" type="submit" name="submit" value="Зарегистрироваться">
-					<h4 class="popUp__under-button-txt">или <span class="popUp__signin">Войти</span></h4>
-				</form>
-			</div>`;
-const popUpSignUpSuccessefull = `
-			<div class="popUp__conteiner_successefull">
-				<img class="popUp__close-icon" src="${jumpToFile}" alt="close icon">
-				<h3 class="popUp__title" >Пользователь успешно зарегистрирован!</h3>
-				<h4 class="popUp__successefull-description" >Выполнить вход</h4>
-			</div>`
+	const popUpSectionHtml = `
+			<section class="popUp">
+				<div class="popUp__background"></div>
+			</section>`;
+	const popUpSignInHtml = `
+				<div class="popUp__conteiner">
+					<img class="popUp__close-icon" src="${jumpToFile}" alt="close icon">
+					<h3 class="popUp__title" >Вход</h3>
+					<form novalidate class="popUp__login-form" name="signIn" action="https://api.alexanderwilliams.us/signin" method="POST">
+						<label class="popUp__label popUp__label_email" for="email">Email</label>
+						<input class="popUp__input" type="email" name="email" minlength="6" maxlength="30" placeholder="Введите почту" required>
+						<span id="error-email" class="error-sms error-sms__name"></span>
+						<span class="popUp__input-line"></span>
+						<label class="popUp__label popUp__label_password" for="password">Пароль</label>
+						<input class="popUp__input" type="password" name="password" minlength="8" maxlength="16" placeholder="Введите пароль" required>
+						<span class="popUp__input-line"></span>
+						<span id="error-password" class="error-sms error-sms__name"></span>
+						<input class="popUp__submit" type="submit" name="submit" value="Войти">
+						<h4 class="popUp__under-button-txt">или <span class="popUp__signup">Зарегистрироваться</span></h4>
+					</form>
+				</div>`;
+	const popUpSignUpHtml = `
+				<div class="popUp__conteiner">
+					<img class="popUp__close-icon" src="${jumpToFile}" alt="close icon">
+					<h3 class="popUp__title" >Регистрация</h3>
+					<form novalidate class="popUp__login-form" name="signUp" action="https://api.alexanderwilliams.us/signup" method="POST">
+						<label class="popUp__label popUp__label_email" for="email">Email</label>
+						<input class="popUp__input" type="email" name="email" minlength="6" maxlength="30" placeholder="Введите почту" required>
+						<span class="popUp__input-line"></span>
+						<span id="error-email" class="error-sms error-sms__name"></span>
+						<label class="popUp__label popUp__label_password" for="password">Пароль</label>
+						<input class="popUp__input" type="password" name="password" minlength="8" maxlength="16" placeholder="Введите пароль" required>
+						<span class="popUp__input-line"></span>
+						<span id="error-password" class="error-sms error-sms__name"></span>
+						<label class="popUp__label popUp__label_name" for="name">Имя</label>
+						<input class="popUp__input" type="text" name="userName" minlength="4" maxlength="16" placeholder="Введите свое имя" required>
+						<span class="popUp__input-line"></span>
+						<span id="error-userName" class="error-sms error-sms__name"></span>
+						<input class="popUp__submit popUp__submit_signUp" type="submit" name="submit" value="Зарегистрироваться">
+						<h4 class="popUp__under-button-txt">или <span class="popUp__signin">Войти</span></h4>
+					</form>
+				</div>`;
+	const popUpSignUpSuccessefull = `
+				<div class="popUp__conteiner popUp__conteiner_successefull">
+					<img class="popUp__close-icon" src="${jumpToFile}" alt="close icon">
+					<h3 class="popUp__title" >Пользователь успешно зарегистрирован!</h3>
+					<h4 class="popUp__successefull-description" >Выполнить вход</h4>
+				</div>`;
 
-logInButton.addEventListener('click', (e)=>{
-	pageConteiner.insertAdjacentHTML('afterbegin', popUpSectionHtml);
-	pageConteiner.querySelector('.popUp').insertAdjacentHTML('beforeend', popUpSignInHtml);
-	popUp();
-})
+function headersListener(){
+	const logInButton = document.querySelector('.header__button_auth');
+	const pageConteiner = document.querySelector('.main__conteiner');
+
+	const logo = document.querySelector('.header__logo');
+	const buttons = document.querySelectorAll('.header__button');
+	const exitImg = document.querySelector('.header__button_exit-icon');
+
+	logInButton.addEventListener('click', (e)=>{
+		if (!login) {
+			pageConteiner.insertAdjacentHTML('afterbegin', popUpSectionHtml);
+			pageConteiner.querySelector('.popUp').insertAdjacentHTML('beforeend', popUpSignInHtml);
+			popUp('setListeners');
+			preValidator('signIn');
+		} else if (login) {
+			signOutUser();
+		}
+	})
+};
+
 function popUp(signUpTrue) {
 	const popUpSection = document.querySelector('.popUp');
 	let popUpConteiner = popUpSection.querySelector('.popUp__conteiner');
 	let popUpSubmitSignUp;
 	let popUpSuccessefull;
-	preValidator('signIn');
-	popUpSection.addEventListener('click', (e) => {
-		const eClass = e.target.className;
-		(eClass === 'popUp__background')?popUpSection.remove():false;
-		if(eClass === 'popUp__close-icon'){
-			if(window.innerWidth < 680){
-				iconCaller.style.display = 'block';
-				iconCaller.classList.toggle('header__mobile-icon_close');
-				popUpSection.remove();
-			} else {
-				popUpSection.remove();
-			}
-		}
-		if(eClass === 'popUp__signup') {
-			popUpConteiner.remove();
-			popUpSection.insertAdjacentHTML('beforeend', popUpSignUpHtml);
-			preValidator('signUp');
-			popUpConteiner = popUpSection.querySelector('.popUp__conteiner');
-			popUpSubmitSignUp = popUpConteiner.querySelector('.popUp__submit_signUp');
-		};
-		if (eClass === 'popUp__signin') {
-			popUpConteiner.remove();
-			popUpSection.insertAdjacentHTML('beforeend', popUpSignInHtml);
-			popUpConteiner = popUpSection.querySelector('.popUp__conteiner');
-			preValidator('signIn');
-		}
-		if(eClass === 'popUp__submit_signUp' || signUpTrue === true) {
-			//server return successefull response
-			popUpConteiner.remove();
-			popUpSection.insertAdjacentHTML('beforeend', popUpSignUpSuccessefull);
-			popUpConteiner = popUpSection.querySelector('.popUp__conteiner_successefull');
-		}
-		if (eClass === 'popUp__successefull-description') {
-			popUpConteiner.remove();
-			popUpSection.insertAdjacentHTML('beforeend', popUpSignInHtml);
-			popUpConteiner = popUpSection.querySelector('.popUp__conteiner');
-		}
-	})
+
+	if(signUpTrue === true){
+		//server return successefull response
+		popUpConteiner.remove();
+		popUpSection.insertAdjacentHTML('beforeend', popUpSignUpSuccessefull);
+		popUpSuccessefull = popUpSection.querySelector('.popUp__conteiner_successefull');
+		return;
+	} else if (signUpTrue === "signIn") {
+		popUpSection.remove();
+		return;
+	} else if (signUpTrue === "setListeners") {
+		popUpSection.addEventListener('click', (e) => {
+			const eClass = e.target.className;
+			(eClass === 'popUp__background')?popUpSection.remove():false;
+			if(eClass === 'popUp__close-icon'){
+				if(window.innerWidth < 680){
+					iconCaller.style.display = 'block';
+					iconCaller.classList.toggle('header__mobile-icon_close');
+					popUpSection.remove();
+				} else {
+					popUpSection.remove();
+				}
+			};
+			if(eClass === 'popUp__signup') {
+				popUpConteiner.remove();
+				popUpSection.insertAdjacentHTML('beforeend', popUpSignUpHtml);
+				preValidator('signUp');
+				popUpConteiner = popUpSection.querySelector('.popUp__conteiner');
+				popUpSubmitSignUp = popUpConteiner.querySelector('.popUp__submit_signUp');
+			};
+			if (eClass === 'popUp__signin') {
+				popUpConteiner.remove();
+				popUpSection.insertAdjacentHTML('beforeend', popUpSignInHtml);
+				popUpConteiner = popUpSection.querySelector('.popUp__conteiner');
+				preValidator('signIn');
+			};
+			if (eClass === 'popUp__successefull-description') {
+				popUpSuccessefull = popUpSection.querySelector('.popUp__conteiner_successefull');
+				popUpSuccessefull.remove();
+				popUpSection.insertAdjacentHTML('beforeend', popUpSignInHtml);
+				console.log(true + 'im work')
+				popUpConteiner = popUpSection.querySelector('.popUp__conteiner');
+				preValidator('signIn');
+			};
+		})
+	}
 }
 /// header mobile 
 	const iconCaller = document.querySelector('.header__mobile-icon');
@@ -150,7 +211,7 @@ function whiteScheme() {
 		exitImg.classList.toggle('header__button_exit-icon_black');
 	}
 }
-//authorization
+//authorization//////////////////////////////////////////////
 function preValidator(formType){
 	let form
 	if (formType === "signIn"){
@@ -185,8 +246,8 @@ function validator (e) {
 	        error.textContent = langRu.validationLenghtEmail;
 	      } else if (e.name === 'password') {
 	        error.textContent = langRu.validationLenghtPassword;
-	      } else if (e.name === 'name') {
-	        error.textContent = langRu.validationLenghtName;
+	      } else if (e.name === 'userName') {
+	      	error.textContent = langRu.validationLenghtName;
 	      }
 	      submitButton.classList.remove('popUp__submit_active')
 	      return false;
@@ -206,7 +267,6 @@ function profileEditorHandler(e) {
     let valid = true;
 
     inputs.forEach((e) => {
-    	console.log(e)
       if (e.name !== 'submit') {
         if (!validator(e)) { 
           valid = false;
@@ -223,6 +283,37 @@ function profileEditorHandler(e) {
 		})
     }
 }
+//setName()
+function setName(){
+	//const buttonAuth = document.querySelector('.header__button_auth');
+	fetch(`https://api.alexanderwilliams.us/users/me`, { //https://api.alexanderwilliams.us/users/me
+			    method: 'GET',
+			    mode: 'cors',
+			    headers : {
+				    'Accept': 'application/json',
+				    'Content-Type': 'application/json',
+			    },
+			    credentials: 'include',
+			})
+			.then((res) => {
+				if (res.ok) {
+					return res.json()
+				} return Promise.reject(`Error:${res.status}`);
+			})
+			.then((res) => {
+				console.log(res)
+				login = true;
+				const name = res.name;
+				setHeaders(name);
+			//	buttonAuth.textContent = res.name;
+				//buttonAuth.insertAdjacentHTML('beforeend', `<span class="header__button_exit-icon header__button_exit-icon_black"></span>`)
+				return res.name;
+			})
+			.catch((error) => {
+				setHeaders('Авторизоваться');
+				console.log('error', error);
+			});
+}
 function sendReq(form){
 	let email;
 	let password;
@@ -230,78 +321,406 @@ function sendReq(form){
 	form.elements.forEach((e)=>{
 		(e.name === 'email')?email = e.value:false;
 		(e.name === 'password')?password = e.value:false;
-		(e.name === 'name')?name = e.value:false;
-	})
-	console.log(email, password, name)
+		(e.name === 'userName')?name = e.value:false;
+	});
+	console.log(name, email, password)
+	//login user
 	if (name === undefined) {
-		fetch("https://api.alexanderwilliams.us/signin", {
-			  mode : 'no-cors',
-		      method: 'POST',
-		      headers: {
-		      	'Access-Control-Allow-Origin': '*',
-			    'Content-Type': 'application/json'
-			  },
-		      body: JSON.stringify({
+		fetch(`https://api.alexanderwilliams.us/signin`, { //https://api.alexanderwilliams.us/signin
+		  mode : 'cors',
+	      method: 'POST',
+	      redirect: 'follow',
+    	  credentials: 'include',
+	      headers: new Headers({
+		      Accept: 'application/json',
+		      'Content-Type': 'application/json',
+		    }),
+	      body: JSON.stringify({
 		        "email": email,
 		        "password": password
 		      }),
 		      redirect: 'follow'
-		    }
-	    )
+	    })
 	    .then((res) => {
 	        if (res.ok) {
-	        	console.log(true)
-	          return res.json();
+	            return	res.json();
 	        } return Promise.reject(`Error:${res.status}`);
       	})
+      	.then((response) => {
+	        	setName();
+	        	popUp('signIn');
+	        	login = true;
+	            return;
+      	})
 	    .catch(error => console.log('error', error));
-	} else if (name) {
+	} else if (name) {         //create user
 		fetch(`https://api.alexanderwilliams.us/signup`, {
-		  mode : 'no-cors',
+		  mode : 'cors',
 	      method: 'POST',
-	      headers: {
-	      	'Access-Control-Allow-Origin': '*',
-	        'Content-Type': 'application/json'
-	      }, 
+	      headers: new Headers({
+		      Accept: 'application/json',
+		      'Content-Type': 'application/json',
+		    }),
 	      body: JSON.stringify({
-	        email: email,
-	        password: password,
-	        name: name,
+	      	"name": name,
+	        "email": email,
+	        "password": password
 	      }),
 		  redirect: 'follow'
 	    })
 	    .then((res) => {
         if (res.ok) {
-        	popUp(true)
-        	console.log(true)
+        	popUp(true);
           return res.json();
-        } console.log(false)
+        }
         return Promise.reject(`Error:${res.status}`);
       });
 	}
 }
-/// обработка после атворизации
+function signOutUser(){
+	fetch(`https://api.alexanderwilliams.us/users/me`, { //https://api.alexanderwilliams.us/users/me
+			    method: 'DELETE',
+			    mode: 'cors',
+			    headers : {
+				    'Accept': 'application/json',
+				    'Content-Type': 'application/json',
+			    },
+			    credentials: 'include',
+			})
+			.then((res) => {
+				if (res.ok) {
+					return res.json()
+				} return Promise.reject(`Error:${res.status}`);
+			})
+			.then((res) => {
+				login = false;
+				setHeaders('Авторизоваться');
+				return;
+			})
+			.catch((error) => {
+				console.log('error', error);
+			});
+
+}
+/// обработка после атворизации///////////////////////////////////
+/// Search News /////////////////
 //API Key 3c48624ca3ff47eb9d50ce64b52e3f1e
-const formSearch = document.forms.search;
-formSearch.addEventListener('submit', (e) => {
-	event.preventDefault();
-	let article;
-	let inputs = formSearch.elements;
-	inputs.forEach((e)=>{
-		(e.name === 'search')?article = e.value:false;
-	})
-	let date;
-	const url = `https://newsapi.org/v2/everything?q=${article}&from=2020-04-07&sortBy=popularity&apiKey=3c48624ca3ff47eb9d50ce64b52e3f1e`;
+//keyword when searching news
+let keyword;
+
+if (document.querySelector('title').textContent !== 'SavedNews') {
+	const formSearch = document.forms.search;
+	let cards;
+	formSearch.addEventListener('submit', (e) => {
+		event.preventDefault();
+
+		//search for content
+		let contentClear = document.querySelector('.newscard-block');
+		if (contentClear != undefined) {
+			contentClear.remove();
+		}
+
+		let article;
+		let inputs = formSearch.elements;
+		inputs.forEach((e)=>{
+			(e.name === 'search')?article = e.value:false;
+		})
+		
+		getNews(article)
+			.then((res) => {
+				cards = res.articles;
+				preloder(res.articles, article)
+				
+	      })
+	  	.catch((err) => console.log(err));
+	  });
+}
+//find News
+function getNews(article){
+	let date = new Date();
+	date.setDate(date.getDate() - 7)
+	//console.log(date.toISOString().slice(0, 10))
+	const url = `https://newsapi.org/v2/everything?q=${article}&from=${date.toISOString().slice(0, 10)}-$}&sortBy=popularity&apiKey=3c48624ca3ff47eb9d50ce64b52e3f1e`;
 	const req = new Request(url);
-	fetch(req)
+	return fetch(req)
 	    .then((res) => {
-	    	console.log(res.json());
 	        if (res.ok) {
 	          return res.json();
 	        } return Promise.reject(`Error:${res.status}`);
       	})
-	    .catch(error => console.log('error', error));
-})
+	    .catch((error) => {
+	    	console.log(error);
+	    	errSetUp(false);
+	    });
+}
+//build Cards 6 at one time
+const aboutAuthor = document.querySelector('.about-author');//section after newscard
+const newscardErrSectionHTML = `<section class="newscard-error">
+			<img class="newscard-error__img" src="./img/error.png" alt="error">
+			<h3 class="newscard-error__title" >Ничего не найдено</h3>
+			<h4 class="newscard-error__descripition" >К сожалению по вашему запросу ничего не найдено.</h4>
+		</section>`;
+const newscardSectionHTML = `<section class="newscard-block">
+			<div class="newscard__main-conteiner">
+				<h2 class="newscard-block__title">Результаты поиска</h2>
+				<div class="newscard__conteiner"></div>
+				</div>
+				<!--<button class="newscard-block__button">Показать еще</button>-->
+			</div>
+		</section>`;
+const preloderSectionHTML = `<section class="preloader">
+			<i class="circle-preloader circle-preloader__deactiveted"></i>
+			<h4 class="preloader__description">Идёт поиск новостей</h4>
+		</section>`;
+let arrWithNews;
+function errSetUp(bool){
+	if (document.querySelector('.newscard-error') != undefined) {
+		document.querySelector('.newscard-error').remove();
+	}
+	if (bool) {
+		return;
+	}
+	aboutAuthor.insertAdjacentHTML('beforeBegin', newscardErrSectionHTML);
+}
+function preloder(e, searchWord){
+	errSetUp(true);
+	arrWithNews = e;
+	//console.log(e[1]);
+	aboutAuthor.insertAdjacentHTML('beforeBegin', preloderSectionHTML);
+	let activePreloder = document.querySelector('.preloader');
+
+	setTimeout(response, 1500);
+	function response(){
+		activePreloder.remove();
+		if (e.length === 0) {
+			errSetUp(false);
+			return;
+		} 
+		keyword = searchWord;
+		buildCards(e);
+
+	}
+	return arrWithNews;
+}
+function buildCards(arr){
+	let counter = 0;
+	let preSetHtmlForCard = `<!--Section with Cards-->`;
+	try {
+		while( counter < 6) {
+			countPlace(arr.shift());
+			counter = counter + 1;
+		}
+	}
+	catch (err) {
+		document.querySelector('.newscard-block__button').remove();
+	}
+			
+	function countPlace(elem){
+		//00 month 0000
+		//console.log(elem)
+		let card = `<div class="newscard" keyword="${keyword}">
+						<img class="newscard__img" src="${elem.urlToImage}" alt="news photo" onerror="this.onerror=null;this.src='./img/img_not_found.png';">
+						<span class="newscard__save"></span>
+						<div class="newscard__txt-conteiner">
+							<h4 class="newscard__date" date="${elem.publishedAt}">${giveDate(elem.publishedAt)}</h4>
+							<h3 class="newscard__title"><a href="${elem.url}" alt="news">${title(elem.title)}</a></h3>
+							
+							<p class="newscard__txt">${elem.description}</p>
+							<h4 class="newscard__owner">${elem.source.name}</h4>
+						</div>
+					</div>`;
+		function title(txt){
+			if (txt.length > 50) {
+				let shrink = txt.slice(0, 50);
+				while(shrink[shrink.length] === ' ') {
+					shrink = shrink.slice(0, (shrink.length - 1));
+				} 
+				return shrink + '...';
+			} else {
+				return txt;
+			}
+		}
+		preSetHtmlForCard = preSetHtmlForCard + `\n` + card;
+		return preSetHtmlForCard;
+	}
+
+	if (document.querySelectorAll('.newscard').length === 0) {
+		aboutAuthor.insertAdjacentHTML('beforeBegin', newscardSectionHTML);
+		const newsCardConteiner = document.querySelector('.newscard__conteiner');
+		newsCardConteiner.addEventListener('click', (e)=>{
+			if(e.target.classList.contains('newscard__save')){
+				addToFavoriteNews(e.target);
+			}
+		})
+		newsCardConteiner.insertAdjacentHTML('beforeend', preSetHtmlForCard);
+		newsCardConteiner.insertAdjacentHTML('afterend', '<button class="newscard-block__button">Показать еще</button>');
+		const moreNewsBtn  = newsCardConteiner.parentNode.parentNode.querySelector('.newscard-block__button');
+		moreNewsBtn.addEventListener('click', (e)=>{
+			buildCards(arrWithNews)
+		})
+	} else if (document.querySelectorAll('.newscard').length > 1) {
+		const newsCardConteiner = document.querySelector('.newscard__conteiner');
+		newsCardConteiner.insertAdjacentHTML('beforeend', preSetHtmlForCard);
+	}
+
+
+	setCardDescription();
+	
+	return arrWithNews = arr;
+}
+
+function giveDate(e){
+	//"2020-03-25T13:15:58Z"
+	let date = new Date(e.slice(0, 10));
+	let month = date.getMonth();
+	if (month === 0) {
+		month = 'Января';
+	} else if (month === 1) {
+		month = 'Февраля';
+	} else if (month === 2) {
+		month = 'Марта';
+	} else if (month === 3) {
+		month = 'Апреля';
+	} else if (month === 4) {
+		month = 'Майя';
+	} else if (month === 5) {
+		month = 'Июня';
+	} else if (month === 6) {
+		month = 'Июля';
+	} else if (month === 7) {
+		month = 'Августа';
+	} else if (month === 8) {
+		month = 'Сентября';
+	} else if (month === 9) {
+		month = 'Октября';
+	} else if (month === 10) {
+		month = 'Ноября';
+	} else if (month === 11) {
+		month = 'Декабря';
+	} 
+	let str = date.getDate() + ' ' + month + ' ' + date.getFullYear();
+	return str;
+}
+function setCardDescription(){
+		const newscardTxtMainCont = document.querySelectorAll('.newscard__txt-conteiner');
+		const windowWidth = window.innerWidth;
+		if (windowWidth < 1350 && windowWidth >= 1250) {
+			setTimeout(go, 50)
+			function go(){
+				newscardTxtMainCont.forEach(e=>{setEclipsis(230, e)});
+			}
+		} else if (windowWidth < 1250 && windowWidth > 680) {
+			setTimeout(go, 50)
+			function go(){
+				newscardTxtMainCont.forEach(e=>{setEclipsis(220, e)});
+			}
+		} else if (windowWidth <= 680) {
+			setTimeout(go, 50)
+			function go(){
+				newscardTxtMainCont.forEach(e=>{setEclipsis(185, e)});
+			}
+		} else {
+			setTimeout(go, 50)
+			function go(){
+				newscardTxtMainCont.forEach(e=>{setEclipsis(235, e)});
+			}
+		}
+		//setEclipsis
+		function setEclipsis(myHeight, elem){
+			let heightOfElem = elem.offsetHeight;
+			let newscardTxt = elem.querySelector('.newscard__txt');
+			let str = newscardTxt.textContent;
+			let compare = true;
+			while(myHeight < heightOfElem) {
+			 	str = str.slice(0, -1);
+				newscardTxt.textContent = str + '...';
+				heightOfElem = elem.offsetHeight;
+			}
+		}	
+}
+
+function addToFavoriteNews(e){
+	let card = e.parentNode;
+	//save button
+	console.log(e);
+	let save = card.querySelector('.newscard__save');
+	if (save.classList.contains('.newscard__save_active')) {
+		let cardId = card.getAttribute('card_id');
+		fetch(`https://api.alexanderwilliams.us/articles/${cardId}`, { //https://api.alexanderwilliams.us/signin
+		  mode : 'cors',
+	      method: 'DELETE',
+	      redirect: 'follow',
+    	  credentials: 'include',
+	      headers: new Headers({
+		      Accept: 'application/json',
+		      'Content-Type': 'application/json',
+		    }),
+	    })
+	    .then((res) => {
+	        if (res.ok) {
+	            return	res.json();
+	        } return Promise.reject(`Error:${res.status}`);
+      	})
+      	.then((response) => {
+      			save.classList.toggle('newscard__save_active');
+	            return;
+      	})
+	    .catch((error) => {
+	    	console.log('error', error);
+	    	return;
+	    });
+		return;
+	}
+
+	let keyword = card.getAttribute('keyword');
+	let txtConteiner = card.querySelector('.newscard__txt-conteiner');
+	let title = txtConteiner.querySelector('.newscard__title').textContent;
+	let txt = txtConteiner.querySelector('.newscard__txt').textContent;
+	let date = txtConteiner.querySelector('.newscard__date').getAttribute('date');
+	let source = txtConteiner.querySelector('.newscard__owner').textContent;
+	let link = txtConteiner.querySelector('.newscard__title').childNodes[0].getAttribute('href');
+	let image = card.querySelector('.newscard__img').getAttribute('src');
+	console.log(date);
+	fetch(`https://api.alexanderwilliams.us/articles`, { //https://api.alexanderwilliams.us/signin
+		  mode : 'cors',
+	      method: 'POST',
+	      redirect: 'follow',
+    	  credentials: 'include',
+	      headers: new Headers({
+		      Accept: 'application/json',
+		      'Content-Type': 'application/json',
+		    }),
+	      body: JSON.stringify({
+	      		"keyword": keyword,
+				"title": title,
+				"text": txt,
+				"date": date,
+				"source": source,
+				"link": link,
+				"image": image
+			}),
+		      redirect: 'follow'
+	    })
+	    .then((res) => {
+	        if (res.ok) {
+	            return	res.json();
+	        } return Promise.reject(`Error:${res.status}`);
+      	})
+      	.then((response) => {
+      			save.classList.toggle('newscard__save_active');
+      			card.setAttribute('card_id', response.data._id);
+	            return;
+      	})
+	    .catch((error) => {
+	    	console.log('error', error);
+	    	return;
+	    });
+};
+//scritp auto refresh for eclipses
+window.addEventListener("resize", ()=>{
+	setCardDescription();
+});
+
 //https://newsapi.org/v2/everything?q=bitcoin&apiKey=3c48624ca3ff47eb9d50ce64b52e3f1e
 // var url = 'http://newsapi.org/v2/everything?' +
 //           'q=Apple&' +
@@ -315,3 +734,122 @@ formSearch.addEventListener('submit', (e) => {
 //     .then(function(response) {
 //         console.log(response.json());
 //     })
+
+/////////// SAVED NEWS SCRIPTS
+if (document.querySelector('title').textContent === 'SavedNews') {
+	getFavoriteCards()
+}
+function getFavoriteCards(){
+	fetch(`https://api.alexanderwilliams.us/articles`, { //https://api.alexanderwilliams.us/signin
+		  mode : 'cors',
+	      method: 'GET',
+	      redirect: 'follow',
+    	  credentials: 'include',
+	      headers: new Headers({
+		      Accept: 'application/json',
+		      'Content-Type': 'application/json',
+		    }),
+	    })
+	    .then((res) => {
+	        if (res.ok) {
+	            return	res.json();
+	        } return Promise.reject(`Error:${res.status}`);
+      	})
+      	.then((response)=>{
+				buildFavoriteCards(response, name);
+	            return;
+      	})
+	    .catch((error) => {
+	    	console.log('error', error);
+	    	return;
+	    });
+}
+
+function buildFavoriteCards(arr){
+	// <section class="article">
+	// 		<h3 class="article__description">Сохранённые статьи</h3>
+	// 		<h1 class="article__title">Грета, у вас 5 сохранённых статей</h1>
+	// 		<h3 class="article__find-result">По ключевым словам: <span>Природа</span>, <span>Тайга</span> и <span>2 другим</span></h3>
+	// 	</section>
+	let preSetHtmlForCard = `<!--Section with Cards-->`;
+	let dataForCards = arr.data;
+	let article = document.querySelector('.article');
+	let articleTitle = article.querySelector('.article__title');
+	console.log(name);
+	articleTitle.textContent = name +', у вас ' + dataForCards.length + ' сохранённых статей';
+
+	console.log(dataForCards)
+	dataForCards.forEach((e)=>{
+		countPlace(e);
+	})
+			
+	function countPlace(elem){
+		//00 month 0000
+		//console.log(elem)
+		let card = `<div class="newscard" card_id="${elem._id}">
+						<img class="newscard__img" src="${elem.image}" alt="news photo" onerror="this.onerror=null;this.src='./img/img_not_found.png';">
+						<span class="newscard__keyword">${elem.keyword}</span>
+						<div class="newscard__delete">
+							<span>Убрать из сохранённых</span>
+						</div>
+						<div class="newscard__txt-conteiner">
+							<h4 class="newscard__date" date="${elem.date}">${elem.date}</h4>
+							<h3 class="newscard__title"><a href="${elem.link}" alt="news">${title(elem.title)}</a></h3>
+							<p class="newscard__txt">${elem.text}</p>
+							<h4 class="newscard__owner">${elem.source}</h4>
+						</div>
+					</div>`;
+		function title(txt){
+			if (txt.length > 50) {
+				let shrink = txt.slice(0, 50);
+				while(shrink[shrink.length] === ' ') {
+					shrink = shrink.slice(0, (shrink.length - 1));
+				} 
+				return shrink + '...';
+			} else {
+				return txt;
+			}
+		}
+		preSetHtmlForCard = preSetHtmlForCard + `\n` + card;
+		return preSetHtmlForCard;
+	}
+
+	//aboutAuthor.insertAdjacentHTML('beforeBegin', newscardSectionHTML);
+	const newsCardConteiner = document.querySelector('.newscard__conteiner');
+	newsCardConteiner.addEventListener('click', (e)=>{
+		if(e.target.classList.contains('newscard__delete')){
+			deleteFavoriteNews(e.target);
+		}
+	})
+	newsCardConteiner.insertAdjacentHTML('beforeend', preSetHtmlForCard);
+}
+function deleteFavoriteNews(e){
+	let card = e.parentNode;
+	console.log(e);
+	let cardId = card.getAttribute('card_id');
+
+	fetch(`https://api.alexanderwilliams.us/articles/${cardId}`, { //https://api.alexanderwilliams.us/signin
+	  mode : 'cors',
+      method: 'DELETE',
+      redirect: 'follow',
+   	  credentials: 'include',
+      headers: new Headers({
+	      Accept: 'application/json',
+	      'Content-Type': 'application/json',
+	    }),
+    })
+    .then((res) => {
+        if (res.ok) {
+            return	res.json();
+        } return Promise.reject(`Error:${res.status}`);
+     	})
+     	.then((response) => {
+     		card.remove();
+            return;
+     	})
+    .catch((error) => {
+    	console.log('error', error);
+    	return;
+    });
+	return;
+}

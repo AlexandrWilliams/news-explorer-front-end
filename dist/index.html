@@ -9,7 +9,7 @@
   	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>NewsExplorer</title>
 	<link rel="shortcut icon" type="image/png" href="./img/favicon.png"/>
-	<link rel="stylesheet" type="text/css" href="main.8aa0b6666b51e4929d49.css">
+	<link rel="stylesheet" type="text/css" href="main.9a50d30b58c1277eb631.css">
 </head>
 <body>
 	<header class="header">
@@ -64,49 +64,28 @@
 			<img class="newscard-error__img" src="./img/error.png" alt="error">
 			<h3 class="newscard-error__title" >Ничего не найдено</h3>
 			<h4 class="newscard-error__descripition" >К сожалению по вашему запросу ничего не найдено.</h4>
-		</section> -->
+		</section> 
 		<section class="newscard-block">
 			<div class="newscard__main-conteiner">
 				<h2 class="newscard-block__title">Результаты поиска</h2>
 				<div class="newscard__conteiner">
 					<div class="newscard">
-						<img class="newscard__img" src="./img/img_01.png" alt="news photo">
+						<img class="newscard__img" src="" alt="news photo" onerror="this.onerror=null;this.src='./img/img_not_found.png';">
 						<span class="newscard__save"></span>
 						<div class="newscard__txt-conteiner">
-							<h4 class="newscard__date">2 августа, 2019</h4>
-							<h3 class="newscard__title">Национальное достояние – парки</h3>
-							<p class="newscard__txt">В 2016 году Америка отмечала важный юбилей: сто лет назад здесь начала складываться система национальных парков – охраняемых территорий, где и сегодня каждый может приобщиться к природе.</p>
-							<h4 class="newscard__owner">Риа</h4>
+							<h4 class="newscard__date"></h4>
+							<h3 class="newscard__title"><a href="" alt="news"></a></h3>
+							
+							<p class="newscard__txt"></p>
+							<h4 class="newscard__owner"></h4>
 						</div>
-						
 					</div>
-					<div class="newscard">
-						<img class="newscard__img" src="./img/img_02.png" alt="news photo">
-						<span class="newscard__save"></span>
-						<div class="newscard__txt-conteiner">
-							<h4 class="newscard__date">2 августа, 2019</h4>
-							<h3 class="newscard__title">Лесные огоньки: история одной фотографии</h3>
-							<p class="newscard__txt">Фотограф отвлеклась от освещения суровой политической реальности Мексики, чтобы запечатлеть ускользающую красоту одного 
-		из местных чудес природы.</p>
-							<h4 class="newscard__owner">Лента.ру</h4>
-						</div>
-						
-					</div>
-					<div class="newscard">
-						<img class="newscard__img" src="./img/img_03.png" alt="news photo">
-						<span class="newscard__save newscard__save_active"></span>
-						<div class="newscard__txt-conteiner">
-							<h4 class="newscard__date">2 августа, 2019</h4>
-							<h3 class="newscard__title">«Первозданная тайга»: новый фотопроект Игоря Шпиленка</h3>
-							<p class="newscard__txt">Знаменитый фотограф снимает первозданные леса России, чтобы рассказать о необходимости их сохранения. В этот раз он отправился в Двинско-Пинежскую тайгу, где...</p>
-							<h4 class="newscard__owner">Медуза</h4>
-						</div>
-						
-					</div>
+				</div>
 				</div>
 				<button class="newscard-block__button">Показать еще</button>
 			</div>
 		</section>
+-->
 		<section class="about-author">
 			<img class="about-author__img" src="https://scontent-mia3-2.xx.fbcdn.net/v/t1.15752-9/83977935_1355129287999339_3594856556958580736_n.jpg?_nc_cat=107&_nc_ohc=2ar6o3IcGkcAX9ejxkw&_nc_ht=scontent-mia3-2.xx&oh=92ab7cf7ae976f55e44cf1a0a650e22d&oe=5ECC5CF7" alt="author photo">
 			<div class="about-author__txt-conteiner">
@@ -132,46 +111,46 @@
 			</div>
 		</div>
 	</footer>
-	<script type="text/javascript" src="main.002736c581f36ac9f36b.js"></script>
+	<script type="text/javascript" src="main.7842a3bec92c4c11cc0c.js"></script>
 	<script type="text/javascript">
 
-		const newscardTxtMainCont = document.querySelectorAll('.newscard__txt-conteiner');
-		const windowWidth = window.innerWidth;
-		if (windowWidth < 1350 && windowWidth >= 1250) {
-			setTimeout(go, 50)
-			function go(){
-				newscardTxtMainCont.forEach(e=>{setEclipsis(230, e)});
-			}
-		} else if (windowWidth < 1250 && windowWidth > 680) {
-			setTimeout(go, 50)
-			function go(){
-				newscardTxtMainCont.forEach(e=>{setEclipsis(220, e)});
-			}
-		} else if (windowWidth <= 680) {
-			setTimeout(go, 50)
-			function go(){
-				newscardTxtMainCont.forEach(e=>{setEclipsis(185, e)});
-			}
-		}
-		//setEclipsis
-		function setEclipsis(myHeight, elem){
-			let heightOfElem = elem.offsetHeight;
-			let newscardTxt = elem.querySelector('.newscard__txt');
-			let str = newscardTxt.textContent;
-			let compare = true;
-			while(myHeight < heightOfElem) {
-			 	str = str.slice(0, -1);
-				newscardTxt.textContent = str + '...';
-				heightOfElem = elem.offsetHeight;
-			}
-		}
-		//scritp auto refresh for eclipses
-		window.addEventListener("resize", ()=>{
-			setTimeout(resetScreen, 500);
-			function resetScreen(){
-				location.reload()
-			}
-		});
+		// const newscardTxtMainCont = document.querySelectorAll('.newscard__txt-conteiner');
+		// const windowWidth = window.innerWidth;
+		// if (windowWidth < 1350 && windowWidth >= 1250) {
+		// 	setTimeout(go, 50)
+		// 	function go(){
+		// 		newscardTxtMainCont.forEach(e=>{setEclipsis(230, e)});
+		// 	}
+		// } else if (windowWidth < 1250 && windowWidth > 680) {
+		// 	setTimeout(go, 50)
+		// 	function go(){
+		// 		newscardTxtMainCont.forEach(e=>{setEclipsis(220, e)});
+		// 	}
+		// } else if (windowWidth <= 680) {
+		// 	setTimeout(go, 50)
+		// 	function go(){
+		// 		newscardTxtMainCont.forEach(e=>{setEclipsis(185, e)});
+		// 	}
+		// }
+		// //setEclipsis
+		// function setEclipsis(myHeight, elem){
+		// 	let heightOfElem = elem.offsetHeight;
+		// 	let newscardTxt = elem.querySelector('.newscard__txt');
+		// 	let str = newscardTxt.textContent;
+		// 	let compare = true;
+		// 	while(myHeight < heightOfElem) {
+		// 	 	str = str.slice(0, -1);
+		// 		newscardTxt.textContent = str + '...';
+		// 		heightOfElem = elem.offsetHeight;
+		// 	}
+		// }
+		// //scritp auto refresh for eclipses
+		// window.addEventListener("resize", ()=>{
+		// 	setTimeout(resetScreen, 500);
+		// 	function resetScreen(){
+		// 		location.reload()
+		// 	}
+		// });
 	</script>
 </body>
 </html>
