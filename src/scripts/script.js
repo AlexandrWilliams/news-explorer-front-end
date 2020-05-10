@@ -40,6 +40,13 @@ function setHeaders(name){
 					</ul>`;
 	if (login) {
 		header.insertAdjacentHTML('beforeend', headerAuth);
+		if (document.querySelector('title').textContent === 'SavedNews') {
+			console.log('log')
+			let mainBtn = document.querySelector('.header__button_main');
+			let savedNewsBtn = document.querySelector('.header__button_save');
+			mainBtn.querySelector('span').remove();
+			savedNewsBtn.insertAdjacentHTML('beforeend', `<span class="header__button_active"></span>`);
+		}
 	} else {
 		header.insertAdjacentHTML('beforeend', headerAintAuth);
 	}
@@ -309,8 +316,8 @@ async function setName(){
 				return res.name;
 			})
 			.catch((error) => {
+				savedNewsSigOut();
 				return 'Авторизоваться';
-				console.log('error', error);
 			});
 	return name;
 }
@@ -394,7 +401,7 @@ function signOutUser(){
 			})
 			.then((res) => {
 				login = false;
-				(document.querySelector('title').textContent === 'SavedNews')?window.location.replace('https://alexandrwilliams.github.io/news-explorer-front-end/'):false;
+				savedNewsSigOut();
 				setHeaders('Авторизоваться');
 				return;
 			})
@@ -403,6 +410,12 @@ function signOutUser(){
 			});
 
 }
+//Saved News signOu or Check
+function savedNewsSigOut(){
+	  (document.querySelector('title').textContent === 'SavedNews' && !login)?window.location.replace('https://alexandrwilliams.github.io/news-explorer-front-end/'):false;
+	  (document.querySelector('title').textContent === 'SavedNews')?window.location.replace('https://alexandrwilliams.github.io/news-explorer-front-end/'):false;
+	  return;
+};
 /// обработка после атворизации///////////////////////////////////
 /// Search News /////////////////
 //API Key 3c48624ca3ff47eb9d50ce64b52e3f1e
@@ -550,16 +563,8 @@ function buildCards(arr){
 	if (document.querySelectorAll('.newscard').length === 0) {
 		aboutAuthor.insertAdjacentHTML('beforeBegin', newscardSectionHTML);
 		const newsCardConteiner = document.querySelector('.newscard__conteiner');
-		newsCardConteiner.addEventListener('click', (e)=>{
-			if(e.target.classList.contains('newscard__save')){
-				addToFavoriteNews(e.target);
-			}
-		});
 		newsCardConteiner.addEventListener('mouseover', (e)=>{
 			if(e.target.classList.contains('newscard__save')){
-				if (e.target.classList.contains('newscard__save_active')) {
-					e.target.classList.remove('newscard__save_hover')
-				}
 				if(!login){
 					e.target.querySelector('span').style.display = 'flex';
 				}
@@ -568,6 +573,12 @@ function buildCards(arr){
 		newsCardConteiner.addEventListener('mouseout', (e)=>{
 			if(e.target.classList.contains('newscard__save')){
     			e.target.querySelector('span').style.display = 'none';
+			}
+		});
+		newsCardConteiner.addEventListener('click', (e)=>{
+			if(e.target.classList.contains('newscard__save')){
+				addToFavoriteNews(e.target);
+
 			}
 		});
 		newsCardConteiner.insertAdjacentHTML('beforeend', preSetHtmlForCard);
@@ -660,7 +671,6 @@ function setCardDescription(){
 function addToFavoriteNews(e){
 	let card = e.parentNode;
 	//save button
-	console.log(e);
 	let save = card.querySelector('.newscard__save');
 	if (save.classList.contains('.newscard__save_active')) {
 		let cardId = card.getAttribute('card_id');
@@ -680,6 +690,7 @@ function addToFavoriteNews(e){
 	        } return Promise.reject(`Error:${res.status}`);
       	})
       	.then((response) => {
+      			save.classList.toggle('newscard__save_hover');
       			save.classList.toggle('newscard__save_active');
 	            return;
       	})
@@ -725,6 +736,7 @@ function addToFavoriteNews(e){
 	        } return Promise.reject(`Error:${res.status}`);
       	})
       	.then((response) => {
+      			save.classList.toggle('newscard__save_hover');
       			save.classList.toggle('newscard__save_active');
       			card.setAttribute('card_id', response.data._id);
 	            return;
@@ -754,11 +766,10 @@ window.addEventListener("resize", ()=>{
 //     })
 
 /////////// SAVED NEWS SCRIPTS
-if (document.querySelector('title').textContent === 'SavedNews' && login) {
+if (document.querySelector('title').textContent === 'SavedNews') {
 	getFavoriteCards();
-} else if (document.querySelector('title').textContent === 'SavedNews' && !login) {
-	window.location.replace('https://alexandrwilliams.github.io/news-explorer-front-end/');
 }
+
 function getFavoriteCards(){
 	fetch(`https://api.alexanderwilliams.us/articles`, { //https://api.alexanderwilliams.us/signin
 		  mode : 'cors',
@@ -786,7 +797,7 @@ function getFavoriteCards(){
 }
 
 async function buildFavoriteCards(arr){
-	if(arr.length > 0){
+	if(arr.data.length > 0){
 		// <section class="article">
 		// 		<h3 class="article__description">Сохранённые статьи</h3>
 		// 		<h1 class="article__title">Грета, у вас 5 сохранённых статей</h1>
