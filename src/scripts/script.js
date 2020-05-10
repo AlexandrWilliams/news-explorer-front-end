@@ -861,6 +861,7 @@ async function buildFavoriteCards(arr){
 			}
 		})
 		newsCardConteiner.insertAdjacentHTML('beforeend', preSetHtmlForCard);
+		setCardDescription();
 		return;
 	} else {
 		setNoArticles()
