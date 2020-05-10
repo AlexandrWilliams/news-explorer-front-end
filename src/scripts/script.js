@@ -527,7 +527,7 @@ function buildCards(arr){
 	let counter = 0;
 	let preSetHtmlForCard = `<!--Section with Cards-->`;
 	try {
-		while( counter < 6) {
+		while( counter < 3) {
 			countPlace(arr.shift());
 			counter = counter + 1;
 		}
@@ -643,12 +643,12 @@ function setCardDescription(){
 		if (windowWidth < 1350 && windowWidth >= 1250) {
 			setTimeout(go, 50)
 			function go(){
-				newscardTxtMainCont.forEach(e=>{setEclipsis(220, e)});
+				newscardTxtMainCont.forEach(e=>{setEclipsis(230, e)});
 			}
 		} else if (windowWidth < 1250 && windowWidth > 680) {
 			setTimeout(go, 50)
 			function go(){
-				newscardTxtMainCont.forEach(e=>{setEclipsis(210, e)});
+				newscardTxtMainCont.forEach(e=>{setEclipsis(220, e)});
 			}
 		} else if (windowWidth <= 680) {
 			setTimeout(go, 50)
@@ -658,7 +658,7 @@ function setCardDescription(){
 		} else {
 			setTimeout(go, 50)
 			function go(){
-				newscardTxtMainCont.forEach(e=>{setEclipsis(225, e)});
+				newscardTxtMainCont.forEach(e=>{setEclipsis(235, e)});
 			}
 		}
 		//setEclipsis
@@ -907,8 +907,11 @@ function deleteFavoriteNews(e){
 
 function setArticlesKeyword(keyword){
 	let str;
-			if (keyword.length > 2) {
-				str = `По ключевым словам: <span>${keyword[0]}</span>, <span>${keyword[1]}</span> и <span>${keyword.length} другим.</span>`;
+			if (keyword.length > 3) {
+				str = `По ключевым словам: <span>${keyword[0]}</span>, <span>${keyword[1]}</span>, <span>${keyword[2]}</span> и <span>${keyword.length - 3} другим.</span>`;
+			}
+			else if (keyword.length >= 3) {
+				str = `По ключевым словам: <span>${keyword[0]}</span>, <span>${keyword[1]}</span> и  <span>${keyword[2]}</span>.`;
 			} else if (keyword.length === 2){
 				str  = `По ключевым словам: <span>${keyword[0]}</span>, <span>${keyword[1]}</span>.`;
 			} else if (keyword.length === 1){
