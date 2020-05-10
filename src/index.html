@@ -16,6 +16,21 @@
 		<div class="header__main-conteiner">
 			<a class="header__logo" title="NewsExplorer" href="https://alexandrwilliams.github.io/news-explorer-front-end/">NewsExplorer</a>
 			<div class="header__mobile-icon"></div>
+			<ul class="header__conteiner">
+				<li>
+					<a class="header__button header__button_main" title="NewsExplorer" href="https://alexandrwilliams.github.io/news-explorer-front-end/">
+					Главная
+					<span class="header__button_active"></span>
+					</a>
+				</li>
+				<li>
+					<a class="header__button header__button_save" title="SavedNews" href="https://alexandrwilliams.github.io/news-explorer-front-end/saved_news/">Сохранённые статьи</a>
+				</li>
+				<li>
+					<button class="header__button header__button_auth">Авторизоваться</button>
+				</li>
+			</ul>
+<!-- 			<div class="header__conteiner">
 			<div class="header__conteiner">
 				<a class="header__button header__button_main" title="NewsExplorer" href="https://alexandrwilliams.github.io/news-explorer-front-end/">
 					Главная
@@ -24,7 +39,7 @@
 				<a class="header__button header__button_save" title="SavedNews" href="https://alexandrwilliams.github.io/news-explorer-front-end/saved_news/">Сохранённые статьи</a>
 				<button class="header__button header__button_auth">Авторизоваться</button>
 			</div>
-		</div>
+ -->		</div>
 		<span class="header__span"></span>
 	</header>
 	<main class="main__conteiner">
@@ -35,7 +50,7 @@
 				<div class="search-block__search-conteiner">
 					<form class="search__form" name="search" action="post" method="POST">
 						<div class="search__input">
-							<input class="search__form_input" type="text" name="search" placeholder="Введите тему новости">
+							<input class="search__form_input" type="text" name="search" required minlength="3" placeholder="Введите тему новости">
 						</div>
 						<input class="search__button" type="submit" placeholder="Искать" value="Искать">
 					</form>

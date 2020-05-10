@@ -1,3 +1,18 @@
+ul {
+	display: flex;
+	align-items: baseline;
+	list-style-type: none;
+    margin-block-start: 0px;
+    margin-block-end: 0px;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 0px;
+}
+
+li {
+	display: block;
+}
+
 .header__button {
 	position: relative;
 	font-family: Roboto;
@@ -14,7 +29,7 @@
 .header__button_active {
 	position: absolute;
 	left: 0;
-	bottom: -29px;
+	bottom: -30px;
 	width: 100%;
 	height: 3px;
 	background-color: #fff;
