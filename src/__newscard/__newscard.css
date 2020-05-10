@@ -30,6 +30,28 @@
 .newscard__save_active {
 	background-image: url("../img/save_active.png");
 }
+.newscard__save_hover:hover {
+	background-image: url('../img/save_hover.png');
+}
+.newscard__save span {
+	position: absolute;
+	display: none;
+	align-items: center;
+	justify-content: space-around;
+    right: 45px;
+    width: 182px;
+    height: 40px;
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: #fff;
+    font-family: Roboto;
+	font-style: normal;
+	font-weight: 500;
+	font-size: 10px;
+	line-height: 12px;
+	color: #000000;
+}
+
 .newscard__txt-conteiner {
 	padding: 0 24px;
 	margin: 20px 0 0;

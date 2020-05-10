@@ -1,6 +1,11 @@
 let login = false;
 
-const name = setName();
+async function resetName() {
+  let response = await setName();
+  setHeaders(response);
+  return;
+};
+resetName();
 
 function setHeaders(name){
 	const headertoRemove = document.querySelector('.header__conteiner');
@@ -284,12 +289,11 @@ function profileEditorHandler(e) {
     }
 }
 //setName()
-function setName(){
-	//const buttonAuth = document.querySelector('.header__button_auth');
-	fetch(`https://api.alexanderwilliams.us/users/me`, { //https://api.alexanderwilliams.us/users/me
+async function setName(){
+	let name = await fetch(`https://api.alexanderwilliams.us/users/me`, { //https://api.alexanderwilliams.us/users/me
 			    method: 'GET',
 			    mode: 'cors',
-			    headers : {
+			    headers: {
 				    'Accept': 'application/json',
 				    'Content-Type': 'application/json',
 			    },
@@ -301,18 +305,14 @@ function setName(){
 				} return Promise.reject(`Error:${res.status}`);
 			})
 			.then((res) => {
-				console.log(res)
 				login = true;
-				const name = res.name;
-				setHeaders(name);
-			//	buttonAuth.textContent = res.name;
-				//buttonAuth.insertAdjacentHTML('beforeend', `<span class="header__button_exit-icon header__button_exit-icon_black"></span>`)
 				return res.name;
 			})
 			.catch((error) => {
-				setHeaders('Авторизоваться');
+				return 'Авторизоваться';
 				console.log('error', error);
 			});
+	return name;
 }
 function sendReq(form){
 	let email;
@@ -347,7 +347,7 @@ function sendReq(form){
 	        } return Promise.reject(`Error:${res.status}`);
       	})
       	.then((response) => {
-	        	setName();
+	        	resetName();
 	        	popUp('signIn');
 	        	login = true;
 	            return;
@@ -394,6 +394,7 @@ function signOutUser(){
 			})
 			.then((res) => {
 				login = false;
+				(document.querySelector('title').textContent === 'SavedNews')?window.location.replace('https://alexandrwilliams.github.io/news-explorer-front-end/'):false;
 				setHeaders('Авторизоваться');
 				return;
 			})
@@ -520,7 +521,9 @@ function buildCards(arr){
 		//console.log(elem)
 		let card = `<div class="newscard" keyword="${keyword}">
 						<img class="newscard__img" src="${elem.urlToImage}" alt="news photo" onerror="this.onerror=null;this.src='./img/img_not_found.png';">
-						<span class="newscard__save"></span>
+						<div class="newscard__save newscard__save_hover">
+							<span>Войдите, чтобы сохранять статьи</span>
+						</div>
 						<div class="newscard__txt-conteiner">
 							<h4 class="newscard__date" date="${elem.publishedAt}">${giveDate(elem.publishedAt)}</h4>
 							<h3 class="newscard__title"><a href="${elem.url}" alt="news">${title(elem.title)}</a></h3>
@@ -551,7 +554,22 @@ function buildCards(arr){
 			if(e.target.classList.contains('newscard__save')){
 				addToFavoriteNews(e.target);
 			}
-		})
+		});
+		newsCardConteiner.addEventListener('mouseover', (e)=>{
+			if(e.target.classList.contains('newscard__save')){
+				if (e.target.classList.contains('newscard__save_active')) {
+					e.target.classList.remove('newscard__save_hover')
+				}
+				if(!login){
+					e.target.querySelector('span').style.display = 'flex';
+				}
+			}
+		});
+		newsCardConteiner.addEventListener('mouseout', (e)=>{
+			if(e.target.classList.contains('newscard__save')){
+    			e.target.querySelector('span').style.display = 'none';
+			}
+		});
 		newsCardConteiner.insertAdjacentHTML('beforeend', preSetHtmlForCard);
 		newsCardConteiner.insertAdjacentHTML('afterend', '<button class="newscard-block__button">Показать еще</button>');
 		const moreNewsBtn  = newsCardConteiner.parentNode.parentNode.querySelector('.newscard-block__button');
@@ -736,8 +754,10 @@ window.addEventListener("resize", ()=>{
 //     })
 
 /////////// SAVED NEWS SCRIPTS
-if (document.querySelector('title').textContent === 'SavedNews') {
-	getFavoriteCards()
+if (document.querySelector('title').textContent === 'SavedNews' && login) {
+	getFavoriteCards();
+} else if (document.querySelector('title').textContent === 'SavedNews' && !login) {
+	window.location.replace('https://alexandrwilliams.github.io/news-explorer-front-end/');
 }
 function getFavoriteCards(){
 	fetch(`https://api.alexanderwilliams.us/articles`, { //https://api.alexanderwilliams.us/signin
@@ -756,8 +776,8 @@ function getFavoriteCards(){
 	        } return Promise.reject(`Error:${res.status}`);
       	})
       	.then((response)=>{
-				buildFavoriteCards(response, name);
-	            return;
+			buildFavoriteCards(response);
+			return;
       	})
 	    .catch((error) => {
 	    	console.log('error', error);
@@ -765,63 +785,75 @@ function getFavoriteCards(){
 	    });
 }
 
-function buildFavoriteCards(arr){
-	// <section class="article">
-	// 		<h3 class="article__description">Сохранённые статьи</h3>
-	// 		<h1 class="article__title">Грета, у вас 5 сохранённых статей</h1>
-	// 		<h3 class="article__find-result">По ключевым словам: <span>Природа</span>, <span>Тайга</span> и <span>2 другим</span></h3>
-	// 	</section>
-	let preSetHtmlForCard = `<!--Section with Cards-->`;
-	let dataForCards = arr.data;
-	let article = document.querySelector('.article');
-	let articleTitle = article.querySelector('.article__title');
-	console.log(name);
-	articleTitle.textContent = name +', у вас ' + dataForCards.length + ' сохранённых статей';
-
-	console.log(dataForCards)
-	dataForCards.forEach((e)=>{
-		countPlace(e);
-	})
-			
-	function countPlace(elem){
-		//00 month 0000
-		//console.log(elem)
-		let card = `<div class="newscard" card_id="${elem._id}">
-						<img class="newscard__img" src="${elem.image}" alt="news photo" onerror="this.onerror=null;this.src='./img/img_not_found.png';">
-						<span class="newscard__keyword">${elem.keyword}</span>
-						<div class="newscard__delete">
-							<span>Убрать из сохранённых</span>
-						</div>
-						<div class="newscard__txt-conteiner">
-							<h4 class="newscard__date" date="${elem.date}">${elem.date}</h4>
-							<h3 class="newscard__title"><a href="${elem.link}" alt="news">${title(elem.title)}</a></h3>
-							<p class="newscard__txt">${elem.text}</p>
-							<h4 class="newscard__owner">${elem.source}</h4>
-						</div>
-					</div>`;
-		function title(txt){
-			if (txt.length > 50) {
-				let shrink = txt.slice(0, 50);
-				while(shrink[shrink.length] === ' ') {
-					shrink = shrink.slice(0, (shrink.length - 1));
-				} 
-				return shrink + '...';
-			} else {
-				return txt;
+async function buildFavoriteCards(arr){
+	if(arr.length > 0){
+		// <section class="article">
+		// 		<h3 class="article__description">Сохранённые статьи</h3>
+		// 		<h1 class="article__title">Грета, у вас 5 сохранённых статей</h1>
+		// 		<h3 class="article__find-result">По ключевым словам: <span>Природа</span>, <span>Тайга</span> и <span>2 другим</span></h3>
+		// 	</section>
+		let preSetHtmlForCard = `<!--Section with Cards-->`;
+		let dataForCards = arr.data;
+		let keyword = [];
+		dataForCards.map((e)=>{
+			if(!keyword.includes(e.keyword)){
+				keyword.push(e.keyword);
 			}
-		}
-		preSetHtmlForCard = preSetHtmlForCard + `\n` + card;
-		return preSetHtmlForCard;
-	}
+		});
 
-	//aboutAuthor.insertAdjacentHTML('beforeBegin', newscardSectionHTML);
-	const newsCardConteiner = document.querySelector('.newscard__conteiner');
-	newsCardConteiner.addEventListener('click', (e)=>{
-		if(e.target.classList.contains('newscard__delete')){
-			deleteFavoriteNews(e.target);
+		let name = await setName();
+		let article = document.querySelector('.article');
+		let articleTitle = article.querySelector('.article__title');
+		let articleFindResult = article.querySelector('.article__find-result');
+		articleTitle.textContent = name +', у вас ' + dataForCards.length + ' сохранённых статей';
+		articleFindResult.insertAdjacentHTML('beforeend', setArticlesKeyword(keyword));
+
+		dataForCards.forEach((e)=>{
+			countPlace(e);
+		});	
+		function countPlace(elem){
+			//00 month 0000
+			//console.log(elem)
+			let card = `<div class="newscard" card_id="${elem._id}">
+							<img class="newscard__img" src="${elem.image}" alt="news photo" onerror="this.onerror=null;this.src='./img/img_not_found.png';">
+							<span class="newscard__keyword">${elem.keyword}</span>
+							<div class="newscard__delete">
+								<span>Убрать из сохранённых</span>
+							</div>
+							<div class="newscard__txt-conteiner">
+								<h4 class="newscard__date" date="${elem.date}">${elem.date}</h4>
+								<h3 class="newscard__title"><a href="${elem.link}" alt="news">${title(elem.title)}</a></h3>
+								<p class="newscard__txt">${elem.text}</p>
+								<h4 class="newscard__owner">${elem.source}</h4>
+							</div>
+						</div>`;
+			function title(txt){
+				if (txt.length > 50) {
+					let shrink = txt.slice(0, 50);
+					while(shrink[shrink.length] === ' ') {
+						shrink = shrink.slice(0, (shrink.length - 1));
+					} 
+					return shrink + '...';
+				} else {
+					return txt;
+				}
+			}
+			preSetHtmlForCard = preSetHtmlForCard + `\n` + card;
+			return preSetHtmlForCard;
 		}
-	})
-	newsCardConteiner.insertAdjacentHTML('beforeend', preSetHtmlForCard);
+
+		//aboutAuthor.insertAdjacentHTML('beforeBegin', newscardSectionHTML);
+		const newsCardConteiner = document.querySelector('.newscard__conteiner');
+		newsCardConteiner.addEventListener('click', (e)=>{
+			if(e.target.classList.contains('newscard__delete')){
+				deleteFavoriteNews(e.target);
+			}
+		})
+		newsCardConteiner.insertAdjacentHTML('beforeend', preSetHtmlForCard);
+		return;
+	} else {
+		setNoArticles()
+	};
 }
 function deleteFavoriteNews(e){
 	let card = e.parentNode;
@@ -852,4 +884,33 @@ function deleteFavoriteNews(e){
     	return;
     });
 	return;
+};
+
+function setArticlesKeyword(keyword){
+	let str;
+			if (keyword.length > 2) {
+				str = `По ключевым словам: <span>${keyword[0]}</span>, <span>${keyword[1]}</span> и <span>${keyword.length} другим.</span>`;
+			} else if (keyword.length === 2){
+				str  = `По ключевым словам: <span>${keyword[0]}</span>, <span>${keyword[1]}</span>.`;
+			} else if (keyword.length === 1){
+				str = `По ключевым словам: <span>${keyword[0]}</span>.`;
+			} return str;
+};
+
+async function setNoArticles(){
+	let name = await setName();
+	let main = document.querySelector('.main__conteiner');
+	let footer = document.querySelector('.footer');
+	let htmlSection = 	`<main class="main__conteiner">
+							<section class="article">
+								<h3 class="article__description">Сохранённые статьи</h3>
+								<h1 class="article__title">${name}, у вас 0 сохранённых статей</h1>
+								<h3 class="article__find-result">Ключевые слова не найдены.</h3>
+							</section>
+							<section class="newscard-block">
+									<h1 style="text-align: center; padding: 50px 0 ;">Похоже что у вас нет сохранённых статей!</h1>
+							</section>
+						</main>`;
+	main.remove();
+	footer.insertAdjacentHTML('beforebegin', htmlSection);
 }
