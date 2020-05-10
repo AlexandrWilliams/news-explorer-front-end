@@ -105,43 +105,43 @@
 	</footer>
 	<script type="text/javascript" src="main.82958a8ac00dbace60f4.js"></script>
 	<script type="text/javascript">
-		// const newscardTxtMainCont = document.querySelectorAll('.newscard__txt-conteiner');
-		// const windowWidth = window.innerWidth;
-		// if (windowWidth < 1350 && windowWidth >= 1250) {
-		// 	setTimeout(go, 50)
-		// 	function go(){
-		// 		newscardTxtMainCont.forEach(e=>{setEclipsis(230, e)});
-		// 	}
-		// } else if (windowWidth < 1250 && windowWidth > 680) {
-		// 	setTimeout(go, 50)
-		// 	function go(){
-		// 		newscardTxtMainCont.forEach(e=>{setEclipsis(220, e)});
-		// 	}
-		// } else if (windowWidth <= 680) {
-		// 	setTimeout(go, 50)
-		// 	function go(){
-		// 		newscardTxtMainCont.forEach(e=>{setEclipsis(185, e)});
-		// 	}
-		// }
-		// //setEclipsis
-		// function setEclipsis(myHeight, elem){
-		// 	let heightOfElem = elem.offsetHeight;
-		// 	let newscardTxt = elem.querySelector('.newscard__txt');
-		// 	let str = newscardTxt.textContent;
-		// 	let compare = true;
-		// 	while(myHeight < heightOfElem) {
-		// 	 	str = str.slice(0, -1);
-		// 		newscardTxt.textContent = str + '...';
-		// 		heightOfElem = elem.offsetHeight;
-		// 	}
-		// }
-		// //scritp auto refresh for eclipses
-		// window.addEventListener("resize", ()=>{
-		// 	setTimeout(resetScreen, 500);
-		// 	function resetScreen(){
-		// 		location.reload()
-		// 	}
-		// });
+		const newscardTxtMainCont = document.querySelectorAll('.newscard__txt-conteiner');
+		const windowWidth = window.innerWidth;
+		if (windowWidth < 1350 && windowWidth >= 1250) {
+			setTimeout(go, 50)
+			function go(){
+				newscardTxtMainCont.forEach(e=>{setEclipsis(230, e)});
+			}
+		} else if (windowWidth < 1250 && windowWidth > 680) {
+			setTimeout(go, 50)
+			function go(){
+				newscardTxtMainCont.forEach(e=>{setEclipsis(220, e)});
+			}
+		} else if (windowWidth <= 680) {
+			setTimeout(go, 50)
+			function go(){
+				newscardTxtMainCont.forEach(e=>{setEclipsis(185, e)});
+			}
+		}
+		//setEclipsis
+		function setEclipsis(myHeight, elem){
+			let heightOfElem = elem.offsetHeight;
+			let newscardTxt = elem.querySelector('.newscard__txt');
+			let str = newscardTxt.textContent;
+			let compare = true;
+			while(myHeight < heightOfElem) {
+			 	str = str.slice(0, -1);
+				newscardTxt.textContent = str + '...';
+				heightOfElem = elem.offsetHeight;
+			}
+		}
+		//scritp auto refresh for eclipses
+		window.addEventListener("resize", ()=>{
+			setTimeout(resetScreen, 500);
+			function resetScreen(){
+				location.reload()
+			}
+		});
 	</script>
 </body>
 </html>
