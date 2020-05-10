@@ -636,12 +636,12 @@ function setCardDescription(){
 		if (windowWidth < 1350 && windowWidth >= 1250) {
 			setTimeout(go, 50)
 			function go(){
-				newscardTxtMainCont.forEach(e=>{setEclipsis(230, e)});
+				newscardTxtMainCont.forEach(e=>{setEclipsis(220, e)});
 			}
 		} else if (windowWidth < 1250 && windowWidth > 680) {
 			setTimeout(go, 50)
 			function go(){
-				newscardTxtMainCont.forEach(e=>{setEclipsis(220, e)});
+				newscardTxtMainCont.forEach(e=>{setEclipsis(210, e)});
 			}
 		} else if (windowWidth <= 680) {
 			setTimeout(go, 50)
@@ -651,7 +651,7 @@ function setCardDescription(){
 		} else {
 			setTimeout(go, 50)
 			function go(){
-				newscardTxtMainCont.forEach(e=>{setEclipsis(235, e)});
+				newscardTxtMainCont.forEach(e=>{setEclipsis(225, e)});
 			}
 		}
 		//setEclipsis
