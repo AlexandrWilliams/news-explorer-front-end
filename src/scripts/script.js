@@ -832,7 +832,7 @@ async function buildFavoriteCards(arr){
 								<span>Убрать из сохранённых</span>
 							</div>
 							<div class="newscard__txt-conteiner">
-								<h4 class="newscard__date" date="${elem.date}">${elem.date}</h4>
+								<h4 class="newscard__date" date="${elem.date}">${giveDate(elem.date)}</h4>
 								<h3 class="newscard__title"><a href="${elem.link}" alt="news">${title(elem.title)}</a></h3>
 								<p class="newscard__txt">${elem.text}</p>
 								<h4 class="newscard__owner">${elem.source}</h4>
