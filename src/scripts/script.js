@@ -124,6 +124,7 @@ function headersListener(){
 			signOutUser();
 		}
 	})
+	mobileHeader();
 };
 
 function popUp(signUpTrue) {
@@ -178,7 +179,13 @@ function popUp(signUpTrue) {
 		})
 	}
 }
-/// header mobile 
+
+function mobileHeader(){
+		/// header mobile 
+	const logo = document.querySelector('.header__logo');
+	const buttons = document.querySelectorAll('.header__button');
+	const exitImg = document.querySelector('.header__button_exit-icon');
+
 	const iconCaller = document.querySelector('.header__mobile-icon');
 	const headerContainer = document.querySelector('.header__main-conteiner');
 	const headerButtonContainer = document.querySelector('.header__conteiner');
@@ -201,28 +208,28 @@ function popUp(signUpTrue) {
 			headerButtonContainer.classList.toggle('header__button-conteiner_mobile');
 		}
 	});
-if (window.innerWidth < 680) {
-	authButton.addEventListener('click', (e) => {
-		if(e.target.classList.contains('header__button_auth')){
-			whiteScheme()
-			iconCaller.style.display = 'none';
-			shadowSpanHeader.classList.toggle('header__mobile-shadow');
-			headerContainer.classList.toggle('header__conteiner_mobile');
-			headerButtonContainer.classList.toggle('header__button-conteiner_mobile');
-		}
-	})
-}
-
-function whiteScheme() {
-	if (title.textContent === 'SavedNews') {
-		logo.classList.toggle('header__logo-white-scheme');
-		buttons.forEach((e)=>{
-			e.classList.toggle('header__button-white-scheme');
+	if (window.innerWidth < 680) {
+		authButton.addEventListener('click', (e) => {
+			if(e.target.classList.contains('header__button_auth')){
+				whiteScheme()
+				iconCaller.style.display = 'none';
+				shadowSpanHeader.classList.toggle('header__mobile-shadow');
+				headerContainer.classList.toggle('header__conteiner_mobile');
+				headerButtonContainer.classList.toggle('header__button-conteiner_mobile');
+			}
 		})
-		iconCaller.classList.toggle('header__mobile-icon_black');
-		exitImg.classList.toggle('header__button_exit-icon_black');
 	}
-}
+	function whiteScheme() {
+		if (title.textContent === 'SavedNews') {
+			logo.classList.toggle('header__logo-white-scheme');
+			buttons.forEach((e)=>{
+				e.classList.toggle('header__button-white-scheme');
+			})
+			iconCaller.classList.toggle('header__mobile-icon_black');
+			exitImg.classList.toggle('header__button_exit-icon_black');
+		}
+	}
+};
 //authorization//////////////////////////////////////////////
 function preValidator(formType){
 	let form
