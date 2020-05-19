@@ -1,145 +1,254 @@
-const logInButton = document.querySelector('.header__button_auth');
-const pageConteiner = document.querySelector('.main__conteiner');
+import {login, HeaderSetName, userReq} from './__headers.js';
+import {articleClass, cardTxt, buildSavedNews} from './__buildSavedNews.js';
 
-const logo = document.querySelector('.header__logo');
-const buttons = document.querySelectorAll('.header__button');
-const exitImg = document.querySelector('.header__button_exit-icon');
-const title = document.querySelector('title');
-const jumpToFile = (title.textContent === 'SavedNews')?'../img/close.png':'img/close.png';
+HeaderSetName();
 
-const popUpSectionHtml = `
-		<section class="popUp">
-			<div class="popUp__background"></div>
-		</section>`;
-const popUpSignInHtml = `
-			<div class="popUp__conteiner">
-				<img class="popUp__close-icon" src="${jumpToFile}" alt="close icon">
-				<h3 class="popUp__title" >Вход</h3>
-				<form class="popUp__login-form" name="logIn" action="post" method="POST">
-					<label class="popUp__label popUp__label_email" for="email">Email</label>
-					<input class="popUp__input" type="email" name="email" minlength="6" maxlength="30" placeholder="Введите почту" required>
-					<span class="popUp__input-line"></span>
-					<label class="popUp__label popUp__label_password" for="password">Пароль</label>
-					<input class="popUp__input" type="password" name="password" minlength="6" maxlength="16" placeholder="Введите пароль" required>
-					<span class="popUp__input-line"></span>
-					<input class="popUp__submit" type="submit" name="submit" value="Войти">
-					<h4 class="popUp__under-button-txt">или <span class="popUp__signup">Зарегистрироваться</span></h4>
-				</form>
-			</div>`;
-const popUpSignUpHtml = `
-			<div class="popUp__conteiner">
-				<img class="popUp__close-icon" src="${jumpToFile}" alt="close icon">
-				<h3 class="popUp__title" >Регистрация</h3>
-				<form class="popUp__login-form" name="logIn" action="post" method="POST">
-					<label class="popUp__label popUp__label_email" for="email">Email</label>
-					<input class="popUp__input" type="email" name="email" minlength="6" maxlength="30" placeholder="Введите почту" required>
-					<span class="popUp__input-line"></span>
-					<label class="popUp__label popUp__label_password" for="password">Пароль</label>
-					<input class="popUp__input" type="password" name="password" minlength="6" maxlength="16" placeholder="Введите пароль" required>
-					<span class="popUp__input-line"></span>
-					<label class="popUp__label popUp__label_name" for="name">Имя</label>
-					<input class="popUp__input" type="text" name="name" minlength="6" maxlength="16" placeholder="Введите свое имя">
-					<span class="popUp__input-line"></span>
-					<input class="popUp__submit popUp__submit_signUp" type="submit" name="submit" value="Зарегистрироваться">
-					<h4 class="popUp__under-button-txt">или <span class="popUp__signin">Войти</span></h4>
-				</form>
-			</div>`;
-const popUpSignUpSuccessefull = `
-			<div class="popUp__conteiner_successefull">
-				<img class="popUp__close-icon" src="${jumpToFile}" alt="close icon">
-				<h3 class="popUp__title" >Пользователь успешно зарегистрирован!</h3>
-				<h4 class="popUp__successefull-description" >Выполнить вход</h4>
-			</div>`
-
-logInButton.addEventListener('click', (e)=>{
-	pageConteiner.insertAdjacentHTML('afterbegin', popUpSectionHtml);
-	pageConteiner.querySelector('.popUp').insertAdjacentHTML('beforeend', popUpSignInHtml);
-	popUp();
-})
-function popUp() {
-	const popUpSection = document.querySelector('.popUp');
-	let popUpConteiner = popUpSection.querySelector('.popUp__conteiner');
-	let popUpSubmitSignUp;
-	let popUpSuccessefull;
-	popUpSection.addEventListener('click', (e) => {
-		const eClass = e.target.className;
-		(eClass === 'popUp__background')?popUpSection.remove():false;
-		if(eClass === 'popUp__close-icon'){
-			if(window.innerWidth < 680){
-				iconCaller.style.display = 'block';
-				iconCaller.classList.toggle('header__mobile-icon_close');
-				popUpSection.remove();
-			} else {
-				popUpSection.remove();
-			}
-		}
-		if(eClass === 'popUp__signup') {
-			popUpConteiner.remove();
-			popUpSection.insertAdjacentHTML('beforeend', popUpSignUpHtml);
-			popUpConteiner = popUpSection.querySelector('.popUp__conteiner');
-			popUpSubmitSignUp = popUpConteiner.querySelector('.popUp__submit_signUp');
-		};
-		if (eClass === 'popUp__signin') {
-			popUpConteiner.remove();
-			popUpSection.insertAdjacentHTML('beforeend', popUpSignInHtml);
-			popUpConteiner = popUpSection.querySelector('.popUp__conteiner');
-		}
-		if(eClass === 'popUp__submit_signUp') {
-			//server return successefull response
-			popUpConteiner.remove();
-			popUpSection.insertAdjacentHTML('beforeend', popUpSignUpSuccessefull);
-			popUpConteiner = popUpSection.querySelector('.popUp__conteiner_successefull');
-		}
-		if (eClass === 'popUp__successefull-description') {
-			popUpConteiner.remove();
-			popUpSection.insertAdjacentHTML('beforeend', popUpSignInHtml);
-			popUpConteiner = popUpSection.querySelector('.popUp__conteiner');
-		}
-	})
+//SavedNews Build
+if (document.querySelector('title').textContent === 'SavedNews') {
+	async function getSavedNews(){
+		return articleClass.getFavoriteCards()
+			.then((res)=>{
+				return buildSavedNews(res);
+			})
+			.catch((error) => {
+			    console.log('error', error);
+			    return;
+			});
+		
+	}
+	getSavedNews();
 }
-/// header mobile 
-	const iconCaller = document.querySelector('.header__mobile-icon');
-	const headerContainer = document.querySelector('.header__main-conteiner');
-	const headerButtonContainer = document.querySelector('.header__conteiner');
-	const shadowSpanHeader = document.querySelector('.header__span');
-	const authButton = document.querySelector('.header__button_auth');
+/// обработка после атворизации///////////////////////////////////
+let keyword;
 
-	iconCaller.addEventListener('click', (e) => {
-		whiteScheme()
-		iconCaller.classList.toggle('header__mobile-icon_close');
-		shadowSpanHeader.classList.toggle('header__mobile-shadow');
-		headerContainer.classList.toggle('header__conteiner_mobile');
-		headerButtonContainer.classList.toggle('header__button-conteiner_mobile');
-	});
-	shadowSpanHeader.addEventListener('click', (e) => {
-		if(e.target.classList.contains('header__mobile-shadow')){
-			whiteScheme()
-			iconCaller.classList.toggle('header__mobile-icon_close');
-			shadowSpanHeader.classList.toggle('header__mobile-shadow');
-			headerContainer.classList.toggle('header__conteiner_mobile');
-			headerButtonContainer.classList.toggle('header__button-conteiner_mobile');
-		}
-	});
-if (window.innerWidth < 680) {
-	authButton.addEventListener('click', (e) => {
-		if(e.target.classList.contains('header__button_auth')){
-			whiteScheme()
-			iconCaller.style.display = 'none';
-			shadowSpanHeader.classList.toggle('header__mobile-shadow');
-			headerContainer.classList.toggle('header__conteiner_mobile');
-			headerButtonContainer.classList.toggle('header__button-conteiner_mobile');
-		}
-	})
-}
+if (document.querySelector('title').textContent !== 'SavedNews') {
+	const formSearch = document.forms.search;
+	let cards;
+	formSearch.addEventListener('submit', (e) => {
+		event.preventDefault();
 
-function whiteScheme() {
-	if (title.textContent === 'SavedNews') {
-		logo.classList.toggle('header__logo-white-scheme');
-		buttons.forEach((e)=>{
-			e.classList.toggle('header__button-white-scheme');
+		//search for content
+		const contentClear = document.querySelector('.newscard-block');
+		if (contentClear != undefined) {
+			contentClear.remove();
+		}
+
+		let article;
+		const inputs = formSearch.elements;
+		inputs.forEach((e)=>{
+			(e.name === 'search')?article = e.value:false;
 		})
-		iconCaller.classList.toggle('header__mobile-icon_black');
-		exitImg.classList.toggle('header__button_exit-icon_black');
+		
+		articleClass.getNews(article)
+			.then((res) => {
+				cards = res.articles;
+				preloder(res.articles, article)
+				return;
+	      	})
+		  	.catch((err) => {
+		  		console.log(err);
+		  		errSetUp(false , err);
+		  	});
+	  });
+}
+
+//build Cards 3 at one time
+const aboutAuthor = document.querySelector('.about-author');//section after newscard
+const newscardErrSectionHTML = `<section class="newscard-error">
+			<img class="newscard-error__img" src="./img/error.png" alt="error">
+			<h3 class="newscard-error__title" >Ничего не найдено</h3>
+			<h4 class="newscard-error__descripition" >К сожалению по вашему запросу ничего не найдено.</h4>
+		</section>`;
+const newscardSectionHTML = `<section class="newscard-block">
+			<div class="newscard__main-conteiner">
+				<h2 class="newscard-block__title">Результаты поиска</h2>
+				<div class="newscard__conteiner"></div>
+				</div>
+				<!--<button class="newscard-block__button">Показать еще</button>-->
+			</div>
+		</section>`;
+const preloderSectionHTML = `<section class="preloader">
+			<i class="circle-preloader circle-preloader__deactiveted"></i>
+			<h4 class="preloader__description">Идёт поиск новостей</h4>
+		</section>`;
+let arrWithNews;
+function errSetUp(bool, errTxt){
+	if (document.querySelector('.newscard-error') != undefined) {
+		document.querySelector('.newscard-error').remove();
+	}
+	if (bool) {
+		return;
+	}
+	aboutAuthor.insertAdjacentHTML('beforeBegin', newscardErrSectionHTML);
+	if (errTxt) {
+		const errTitle = document.querySelector('.newscard-error__title');
+		const errDescrition = document.querySelector('.newscard-error__descripition');
+		errTitle.textContent = 'Произошла непредвиденная ошибка';
+		errDescrition.textContent = `Тип ошибки : ${errTxt}`;
 	}
 }
-/// обработка после атворизации
+function preloder(e, searchWord){
+	errSetUp(true);
+	arrWithNews = e;
+	//console.log(e[1]);
+	aboutAuthor.insertAdjacentHTML('beforeBegin', preloderSectionHTML);
+	const activePreloder = document.querySelector('.preloader');
+
+	setTimeout(response, 1500);
+	function response(){
+		activePreloder.remove();
+		if (e.length === 0) {
+			errSetUp(false);
+			return;
+		} 
+		keyword = searchWord;
+		buildCards(e);
+
+	}
+	return arrWithNews;
+}
+function buildCards(arr){
+	let counter = 0;
+	const showQtyCard = 3;
+	let htmlForCard = `<!--Section with Cards-->`;
+	try {
+		while(counter < showQtyCard) {
+			countPlace(arr.shift());
+			counter = counter + 1;
+		}
+	}
+	catch (err) {
+		document.querySelector('.newscard-block__button').remove();
+	}
+			
+	function countPlace(elem){
+		//00 month 0000
+
+		let card = `<div class="newscard" keyword="${keyword}">
+						<img class="newscard__img" src="${elem.urlToImage}" alt="news photo" onerror="this.onerror=null;this.src='./img/img_not_found.png';">
+						<div class="newscard__save newscard__save_hover">
+							<span>Войдите, чтобы сохранять статьи</span>
+						</div>
+						<div class="newscard__txt-conteiner">
+							<h4 class="newscard__date" date="${elem.publishedAt}">${cardTxt.giveDate(elem.publishedAt)}</h4>
+							<h3 class="newscard__title"><a href="${elem.url}" alt="news">${cardTxt.title(elem.title)}</a></h3>
+							
+							<p class="newscard__txt">${cardTxt.description(elem.description)}</p>
+							<h4 class="newscard__owner">${elem.source.name}</h4>
+						</div>
+					</div>`;
+		htmlForCard = htmlForCard + `\n` + card;
+		return htmlForCard;
+	}
+
+	if (document.querySelectorAll('.newscard').length === 0) {
+		aboutAuthor.insertAdjacentHTML('beforeBegin', newscardSectionHTML);
+		const newsCardConteiner = document.querySelector('.newscard__conteiner');
+		newsCardConteiner.addEventListener('mouseover', favoriteMouseOverHandler);
+		newsCardConteiner.addEventListener('mouseout', favoriteMouseOutHandler);
+		newsCardConteiner.addEventListener('click', cardClickHandler);
+		newsCardConteiner.insertAdjacentHTML('beforeend', htmlForCard);
+		newsCardConteiner.insertAdjacentHTML('afterend', '<button class="newscard-block__button">Показать еще</button>');
+		const moreNewsBtn  = newsCardConteiner.parentNode.parentNode.querySelector('.newscard-block__button');
+		moreNewsBtn.addEventListener('click', (e)=>{
+			buildCards(arrWithNews)
+		})
+	} else if (document.querySelectorAll('.newscard').length > 1) {
+		const newsCardConteiner = document.querySelector('.newscard__conteiner');
+		newsCardConteiner.insertAdjacentHTML('beforeend', htmlForCard);
+	}
+	cardTxt.setCardDescription();
+	
+	return arrWithNews = arr;
+}
+
+function favoriteMouseOverHandler(e){
+	const bool = isUserSignIn(e);
+	if(e.target.classList.contains('newscard__save')){
+    	if(!bool){
+			e.target.querySelector('span').style.display = 'flex';
+		}else{
+			e.target.querySelector('span').style.display = 'none';
+		}		
+	}
+}
+
+function favoriteMouseOutHandler(e){
+	const bool = isUserSignIn(e);
+	if(e.target.classList.contains('newscard__save')){
+    	if(!bool){
+			e.target.querySelector('span').style.display = 'none';
+		}
+	}
+}
+
+function isUserSignIn(elem){
+	const name = document.querySelector('.header__button_auth');
+	if(name.textContent === 'Авторизоваться'){
+		return false;
+	} else if(name.textContent !== 'Авторизоваться'){
+		return true;
+	}
+}
+
+async function cardClickHandler(e){
+	const bool = isUserSignIn(e);
+	if (e.target.classList.contains('newscard__save') && bool) {
+		const card = e.target.parentNode;
+		//save button
+		const save = card.querySelector('.newscard__save');
+		if (save.classList.contains('newscard__save_active')) {
+			const cardId = card.getAttribute('card_id');
+			articleClass.deleteFromFavorite(cardId)
+			.then((res) => {
+				if(res){
+					save.classList.toggle('newscard__save_hover');
+			    	save.classList.toggle('newscard__save_active');
+				} return Promise.reject(`Error:${res.status}`);
+	      	})
+		  	.catch((err) => {
+		  		console.log(err);
+		  		return;
+		  	});
+			
+		} else if (!save.classList.contains('newscard__save_active')){
+			const card = e.target.parentNode;
+			const keyword = card.getAttribute('keyword');
+			const txtConteiner = card.querySelector('.newscard__txt-conteiner');
+			const title = txtConteiner.querySelector('.newscard__title').textContent;
+			const txt = txtConteiner.querySelector('.newscard__txt').textContent;
+			const date = txtConteiner.querySelector('.newscard__date').getAttribute('date');
+			const source = txtConteiner.querySelector('.newscard__owner').textContent;
+			const link = txtConteiner.querySelector('.newscard__title').childNodes[0].getAttribute('href');
+			const image = card.querySelector('.newscard__img').getAttribute('src');
+			const options = {
+				keyword : keyword,
+				txtConteiner : txtConteiner,
+				title : title,
+				txt : txt,
+				date : date,
+				source : source,
+				link : link,
+				image : image,
+			};
+			return articleClass.addToFavoriteNews(options)
+				.then((res)=>{
+					if(res){
+						save.classList.toggle('newscard__save_hover');
+				     	save.classList.toggle('newscard__save_active');
+				     	card.setAttribute('card_id', res.data._id);
+				     	return;
+					} return Promise.reject(`Error:${res.status}`);
+				})
+				.catch((error) => {
+			    	console.log('error', error);
+			    	return false;
+			    });
+		}
+	}
+}
+
+//scritp auto refresh for eclipses
+window.addEventListener("resize", ()=>{
+	cardTxt.setCardDescription();
+});

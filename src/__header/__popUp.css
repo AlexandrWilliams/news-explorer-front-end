@@ -80,7 +80,7 @@
 	border: 1px solid #000000;
 }
 .popUp__submit {
-	margin-top: 40px;
+	margin-top: 5px;
 	width: 100%;
 	height: 65px;
 	border: none;
@@ -138,6 +138,21 @@
 	color: #2F71E5;
 	cursor: pointer;
 }
+
+.error-sms {
+	font-family: Inter;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 12px;
+	line-height: 15px;
+	color: #FF0000;
+}
+
+.errorServer {
+	margin-top: 35px;
+	text-align: center;
+}
+
 @media screen and (max-width: 1024px) {
 	.popUp__close-icon {
 		display: none;
