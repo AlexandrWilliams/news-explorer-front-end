@@ -6,7 +6,7 @@ const headersOptions = {
 
 class ArticlesReq {
 	getNews(article){
-		let date = new Date();
+		const date = new Date();
 		date.setDate(date.getDate() - 7)
 		//console.log(date.toISOString().slice(0, 10))
 		const url = `https://newsapi.org/v2/everything?q=${article}&from=${date.toISOString().slice(0, 10)}-$}&sortBy=popularity&apiKey=3c48624ca3ff47eb9d50ce64b52e3f1e`;
@@ -17,18 +17,9 @@ class ArticlesReq {
 		          return res.json();
 		        } return Promise.reject(`Error:${res.status}`);
 	      	})
-		    .catch((error) => {
-		    	console.log(error);
-		    	errSetUp(false);
-		    });
 	}
-	addToFavoriteNews(e){
-		let card = e.parentNode;
-		//save button
-		let save = card.querySelector('.newscard__save');
-		if (save.classList.contains('.newscard__save_active')) {
-			let cardId = card.getAttribute('card_id');
-			return fetch(`${url}/articles/${cardId}`, { //https://api.alexanderwilliams.us/signin
+	deleteFromFavorite(cardId){
+		return fetch(`${url}/articles/${cardId}`, { //https://api.alexanderwilliams.us/signin
 			  mode : 'cors',
 		      method: 'DELETE',
 		      redirect: 'follow',
@@ -41,25 +32,10 @@ class ArticlesReq {
 		        } return Promise.reject(`Error:${res.status}`);
 	      	})
 	      	.then((response) => {
-	      			save.classList.toggle('newscard__save_hover');
-	      			save.classList.toggle('newscard__save_active');
-		            return;
+		            return true;
 	      	})
-		    .catch((error) => {
-		    	console.log('error', error);
-		    	return;
-		    });
-			return;
-		}
-		let keyword = card.getAttribute('keyword');
-		let txtConteiner = card.querySelector('.newscard__txt-conteiner');
-		let title = txtConteiner.querySelector('.newscard__title').textContent;
-		let txt = txtConteiner.querySelector('.newscard__txt').textContent;
-		let date = txtConteiner.querySelector('.newscard__date').getAttribute('date');
-		let source = txtConteiner.querySelector('.newscard__owner').textContent;
-		let link = txtConteiner.querySelector('.newscard__title').childNodes[0].getAttribute('href');
-		let image = card.querySelector('.newscard__img').getAttribute('src');
-		console.log(date);
+	}
+	addToFavoriteNews(e){
 		return fetch(`${url}/articles`, { //https://api.alexanderwilliams.us/signin
 			  mode : 'cors',
 		      method: 'POST',
@@ -67,13 +43,13 @@ class ArticlesReq {
 	    	  credentials: 'include',
 		      headers: headersOptions,
 		      body: JSON.stringify({
-		      		"keyword": keyword,
-					"title": title,
-					"text": txt,
-					"date": date,
-					"source": source,
-					"link": link,
-					"image": image
+		      		"keyword": e.keyword,
+					"title": e.title,
+					"text": e.txt,
+					"date": e.date,
+					"source": e.source,
+					"link": e.link,
+					"image": e.image
 				}),
 			      redirect: 'follow'
 		    })
@@ -83,15 +59,8 @@ class ArticlesReq {
 		        } return Promise.reject(`Error:${res.status}`);
 	      	})
 	      	.then((response) => {
-	      			save.classList.toggle('newscard__save_hover');
-	      			save.classList.toggle('newscard__save_active');
-	      			card.setAttribute('card_id', response.data._id);
-		            return;
+		            return response;
 	      	})
-		    .catch((error) => {
-		    	console.log('error', error);
-		    	return;
-		    });
 	}
 	getFavoriteCards(){
 		return fetch(`${url}/articles`, { //https://api.alexanderwilliams.us/signin
@@ -109,35 +78,6 @@ class ArticlesReq {
 	      	.then((response)=>{
 				return response;
 	      	})
-		    .catch((error) => {
-		    	console.log('error', error);
-		    	return;
-		    });
-	}
-	deleteFavoriteNews(e){
-		let card = e.parentNode;
-		let cardId = card.getAttribute('card_id');
-
-		return fetch(`${url}/articles/${cardId}`, { //https://api.alexanderwilliams.us/signin
-			  mode : 'cors',
-		      method: 'DELETE',
-		      redirect: 'follow',
-		   	  credentials: 'include',
-		      headers: headersOptions,
-		    })
-		    .then((res) => {
-		        if (res.ok) {
-		            return	res.json();
-		        } return Promise.reject(`Error:${res.status}`);
-		     	})
-		     	.then((response) => {
-		     		card.remove();
-		            return;
-		     	})
-		    .catch((error) => {
-		    	console.log('error', error);
-		    	return;
-		    });
 	}
 }
 
