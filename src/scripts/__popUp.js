@@ -20,8 +20,8 @@ const popUpSignInHtml = `
 							<input class="popUp__input" type="password" autocomplete="on" name="password" minlength="8" maxlength="16" placeholder="Введите пароль" required>
 							<span class="popUp__input-line"></span>
 							<span id="error-password" class="error-sms error-sms__name"></span>
+							<label id="errorServer" class="error-sms errorServer"></label>
 							<input class="popUp__submit" type="submit" name="submit" value="Войти">
-							<span id="errorServer" class="errorServer"></span>
 							<h4 class="popUp__under-button-txt">или <span class="popUp__signup">Зарегистрироваться</span></h4>
 						</form>
 					</div>`;
@@ -42,8 +42,9 @@ const popUpSignUpHtml = `
 							<input class="popUp__input" autocomplete="on" type="text" name="userName" minlength="4" maxlength="16" placeholder="Введите свое имя" required>
 							<span class="popUp__input-line"></span>
 							<span id="error-userName" class="error-sms error-sms__name"></span>
+							<label id="errorServer" class="error-sms errorServer"></label>
 							<input class="popUp__submit popUp__submit_signUp" type="submit" name="submit" value="Зарегистрироваться">
-							<span id="errorServer" class="errorServer"></span>
+							
 							<h4 class="popUp__under-button-txt">или <span class="popUp__signin">Войти</span></h4>
 						</form>
 					</div>`;
